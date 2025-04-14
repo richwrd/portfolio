@@ -28,7 +28,7 @@ Tenho forte inclinação para **DevOps**, **back-end** e **self-hosting**, busca
 
 ### 🐍 Back-end & Integrações
 
-- **Python**: Automação, Web Scraping, Selenium, SQLAlchemy, Pytest (E2E)
+- **Python**: Automação, Web Scraping, Selenium, SQLAlchemy, Patroni, Pytest (E2E)
 - **Banco de Dados**: PostgreSQL (PL/pgSQL, Replicação, PostGIS, PG_Vector), MySQL
 - **Auditoria**: Sistema completo de triggers dinâmicas com JSONB
 - **ETL**: Pentaho Kettle, Apache Hop
@@ -70,7 +70,8 @@ Monitoramento completo de cluster PostgreSQL HA com Grafana + Prometheus integra
 Atualmente estudando:
 
 - **AWS** (EC2, S3, RDS)
-- **Kubernetes**
+- **Langchain**
+- **PG_Vector**
 - **CI/CD com GitHub Actions**
 - **Observabilidade avançada**
 
@@ -87,6 +88,6 @@ Atualmente estudando:
 
 Se você curtiu meu trabalho ou quer trocar uma ideia sobre DevOps, PostgreSQL ou Python, estou à disposição.
 
-📬 **richardwr.dev@gmail.com**
+📬 **eduardorichwrd@gmail.com**
 
 ---
