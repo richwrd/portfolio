@@ -1,0 +1,15 @@
+services:
+  portfolio-app:
+    build: .
+    container_name: portfolio-app
+    ports:
+      - "3005:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - nginx_proxy
+
+networks:
+  nginx_proxy:
+    external: true

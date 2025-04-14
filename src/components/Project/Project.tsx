@@ -78,6 +78,34 @@ export function Project() {
           </div>
         </ScrollAnimation>
 
+
+        <ScrollAnimation animateIn="flipInX">
+          <div className="project">
+            <header>
+              <svg width="50" xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" fill="none" stroke="#23ce6b" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+                <title>Folder</title>
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </header>
+            <div className="body">
+              <h3>🧫 InfectTech</h3>
+              <p>
+                Plataforma inovadora em desenvolvimento para controle de infecções hospitalares, conectando laboratórios e hospitais em tempo real.
+                Integra dados microbiológicos e farmacológicos para otimizar a terapia antimicrobiana com apoio de algoritmos inteligentes.
+                Recursos como dashboards personalizados, alertas automáticos e treinamentos integrados visam reduzir a resistência bacteriana e melhorar os desfechos clínicos.
+              </p>
+            </div>
+            <footer>
+              <ul className="tech-list">
+                <li>Arquitetura Web/Mobile</li>
+                <li>Integração com Laboratórios</li>
+                <li>Segurança (LGPD, SSL/TLS)</li>
+                <li>IA e Algoritmos de Doses</li>
+              </ul>
+            </footer>
+          </div>
+        </ScrollAnimation>
+
         <ScrollAnimation animateIn="flipInX">
           <div className="project">
             <header>
@@ -174,6 +202,9 @@ export function Project() {
             </footer>
           </div>
         </ScrollAnimation>
+
+
+
 
       </div>
     </Container>
