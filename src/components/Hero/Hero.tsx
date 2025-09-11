@@ -26,11 +26,11 @@ export function Hero() {
         </ScrollAnimation>
         <p></p>
         <ScrollAnimation animateIn="fadeInUp" delay={0.6 * 1000}>
-          <p className="small-resume">Engenheiro de Dados | DevOps</p>
+          <p className="small-resume">DevOps | Engenheiro de Dados </p>
         </ScrollAnimation>
         <p></p>
         <ScrollAnimation animateIn="fadeInUp" delay={0.6 * 1000}>
-          <p className="small-resume">+2 Anos de Experiência</p>
+          <p className="small-resume">+3 Anos de Experiência</p>
         </ScrollAnimation>
         <ScrollAnimation animateIn="fadeInUp" delay={0.8 * 1000}>
           <BrowserRouter>
@@ -40,7 +40,7 @@ export function Hero() {
         <ScrollAnimation animateIn="fadeInUp" delay={1 * 1000}>
           <div className="social-media">
             <a
-              href="https://www.linkedin.com/in/dheeraj-prajapati-38993a253/"
+              href="https://www.linkedin.com/in/eduardorichard/"
               target="_blank"
               rel="noreferrer"
               style={{ height: 34, padding: 0, borderRadius: 6 }}

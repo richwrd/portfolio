@@ -1,0 +1,194 @@
+[
+  {
+    "title": "Python",
+    "description": "Tenho uma sólida base em Python, utilizada para automações, ferramentas de integração e consumo de APIs REST. Desenvolvi soluções para exportação de relatórios automatizados, integração com Power BI e manipulação de dados. Realizo web scraping de múltiplas fontes com Selenium e tratamento de dados em tempo real. Também trabalho com múltiplos bancos de dados relacionais utilizando SQLAlchemy para sincronização entre PostgreSQL e MySQL. Além disso, aplico testes automatizados com Pytest usando a estrutura Page Object Model (POM), incluindo testes end-to-end (E2E) com Selenium em sistemas web.",
+    "techStack": [
+      "Python",
+      "SQLAlchemy",
+      "APIs REST",
+      "Web Scraping",
+      "Selenium",
+      "Power BI",
+      "Pytest",
+      "Page Object Model",
+      "E2E Testing"
+    ],
+    "githubUrl": "https://www.python.org/",
+    "externalUrl": null,
+    "firstimage": "pythonIcon",
+    "secondimage": null
+  },
+  {
+    "title": "PostgreSQL",
+    "description": "Experiência sólida em PostgreSQL, atuando com modelagem relacional eficiente, otimização de queries complexas e manutenção de estruturas robustas para sistemas críticos. Domínio em funções PL/pgSQL, criação de triggers dinâmicas, views materializadas e uso de extensões como PostGIS (geolocalização e geoprocessamento), PG_Vector (vetorização para IA), e ferramentas de auditoria DML customizadas. Amplo conhecimento em replicação síncrona, gerenciamento de permissões e tuning de performance.",
+    "techStack": [
+      "PostgreSQL",
+      "PL/pgSQL",
+      "PostGIS",
+      "PG_Vector",
+      "Auditoria DML",
+      "SQL",
+      "Replication",
+      "Performance Tuning",
+      "Triggers"
+    ],
+    "githubUrl": "https://github.com/postgres/postgres",
+    "externalUrl": "https://www.postgresql.org/",
+    "firstimage": "postgresqlIcon",
+    "secondimage": null
+  },
+  {
+    "title": "Pentaho Data Integration & Apache Hop",
+    "description": "Experiência com implantação e gerenciamento de ETLs automatizados com o Pentaho Data Integration (Kettle). Desenvolvido fluxos para execuções diárias de extração, transformação e carga de dados. Atuando na higienização de bases legadas, padronização de dados e criação de estruturas intermediárias para relatórios e análises. Integrado a múltiplos bancos relacionais e fontes externas.",
+    "techStack": [
+      "Pentaho",
+      "Apache Hop",
+      "ETL",
+      "Data Cleaning",
+      "Database Automation",
+      "Kettle",
+      "Transformations"
+    ],
+    "githubUrl": "https://pentaho.com/products/pentaho-data-integration/",
+    "externalUrl": "https://pentaho-community.atlassian.net/wiki/spaces/EAI/overview",
+    "firstimage": "pentahoIcon",
+    "secondimage": "hopIcon"
+  },
+  {
+    "title": "TypeScript",
+    "description": "Utilizado extensivamente em projetos back-end com NestJS e front-end com React Native (Expo), garantindo tipagem estática robusta, segurança em tempo de desenvolvimento e legibilidade de código. Experiência com módulos ES, decorators, DTOs, e integração com APIs REST e WebSockets. Produção de código limpo e escalável, com uso de padrões como Dependency Injection, Repository Pattern e testes automatizados com Jest.",
+    "techStack": [
+      "TypeScript",
+      "NestJS",
+      "React Native",
+      "REST API",
+      "WebSocket",
+      "Jest",
+      "DTOs",
+      "OOP"
+    ],
+    "githubUrl": "https://github.com/microsoft/TypeScript",
+    "externalUrl": "https://www.typescriptlang.org/",
+    "firstimage": "typescriptIcon",
+    "secondimage": null
+  },
+  {
+    "title": "NestJS",
+    "description": "Experiência no desenvolvimento de APIs robustas e escaláveis com NestJS, aplicando boas práticas como injeção de dependência, validação, autenticação JWT e documentação com Swagger. Utilizado em projetos como a API do \"Alugue Quadras\", voltada para gerenciamento e reserva de quadras esportivas.",
+    "techStack": [
+      "NestJS",
+      "TypeScript",
+      "REST API",
+      "Swagger",
+      "JWT Auth",
+      "PostgreSQL",
+      "TypeORM",
+      "S3"
+    ],
+    "githubUrl": "https://github.com/richwrd/aluguequadras/back-end",
+    "externalUrl": "https://back-end.aluguequadras.com/docs",
+    "firstimage": "nestjsIcon",
+    "secondimage": null
+  },
+  {
+    "title": "React Native & Expo Go",
+    "description": "Experiência com desenvolvimento mobile utilizando React Native com Expo Go, focando em interfaces responsivas e navegação fluida. A stack foi aplicada no app do projeto \"Alugue Quadras\", permitindo que usuários realizem reservas, consultem disponibilidade e se conectem com donos de quadras de forma prática e intuitiva.",
+    "techStack": [
+      "React Native",
+      "Expo Go",
+      "TypeScript",
+      "Mobile UI",
+      "Axios",
+      "React Navigation"
+    ],
+    "githubUrl": "https://github.com/richwrd/aluguequadras/front-end",
+    "externalUrl": "https://expo.dev/@richard-dev/aluguequadras",
+    "firstimage": "reactIcon",
+    "secondimage": "expogoIcon"
+  },
+  {
+    "title": "Power BI",
+    "description": "Responsável por implementar dashboards integrados com dados do Redmine via conexão JBDC PostgreSQL. Estruturei queries SQL complexas diretamente no banco para evitar cálculos nas fórmulas do Power BI, otimizando a performance e garantindo maior controle sobre as transformações. Os painéis foram construídos de forma descritiva e analítica, facilitando o acompanhamento de métricas, SLAs e produtividade por equipe. Experiência com modelagem de dados no Power BI, filtros interativos e publicação em workspaces organizacionais.",
+    "techStack": [
+      "Power BI",
+      "PostgreSQL",
+      "JDBC",
+      "SQL",
+      "Data Visualization",
+      "Redmine"
+    ],
+    "githubUrl": null,
+    "externalUrl": "https://powerbi.microsoft.com/",
+    "firstimage": "powerbiIcon",
+    "secondimage": null
+  },
+  {
+    "title": "Jaspersoft Reports",
+    "description": "Responsável pelo desenvolvimento e implementação de relatórios altamente visuais e interativos com Jaspersoft Studio, integrando múltiplas fontes de dados e serviços externos. Utilização da API do Mapbox para visualização de geometrias, além de conexão com serviços AWS como RDS e S3. Expertise em sub-relatórios, parâmetros dinâmicos e personalização visual avançada, garantindo entregas ricas e eficientes para ambientes de análise gerencial e geoespacial.",
+    "techStack": [
+      "Jaspersoft",
+      "Mapbox",
+      "AWS RDS",
+      "AWS S3",
+      "PostgreSQL",
+      "REST API",
+      "PL/pgSQL",
+      "PostGIS"
+    ],
+    "githubUrl": "https://github.com/TIBCOSoftware/jasperreports",
+    "externalUrl": "https://community.jaspersoft.com/",
+    "firstimage": "jaspersoftIcon",
+    "secondimage": null
+  },
+  {
+    "title": "GDAL",
+    "description": "Experiência sólida com manipulação de arquivos geoespaciais (.tiff), utilizando GDAL para processamento de ortofotos em larga escala (cidades inteiras). Realizei operações como criação de overviews (pirâmides) para otimização de desempenho, aplicação de bandas alpha para transparência, compressão com preservação de qualidade, e recortes personalizados com base em shape files ou coordenadas específicas. O fluxo de trabalho foi essencial para servir imagens georreferenciadas com eficiência em plataformas SIG e web.",
+    "techStack": [
+      "GDAL",
+      "GeoTIFF",
+      "Ortofoto",
+      "Alpha Band",
+      "Compression",
+      "Raster",
+      "Geoprocessamento"
+    ],
+    "githubUrl": "https://github.com/OSGeo/gdal",
+    "externalUrl": "https://gdal.org/",
+    "firstimage": "gdalIcon",
+    "secondimage": null
+  },
+  {
+    "title": "LangChain",
+    "description": "Estudo e aplicação prática do LangChain em um projeto de TCC focado em IA generativa e RAG (Retrieval-Augmented Generation). Utilização de modelos locais via Ollama integrados a bases PostgreSQL com extensão pg_vector para embeddings e recuperação semântica de dados. Desenvolvimento em Python com pipelines personalizados de ingestão, chunking e vetorização de documentos. Integração com LLMs para resposta a perguntas contextuais com alto desempenho e baixa latência.",
+    "techStack": [
+      "LangChain",
+      "Python",
+      "Ollama",
+      "PostgreSQL",
+      "pg_vector",
+      "RAG",
+      "Embeddings",
+      "LLM"
+    ],
+    "githubUrl": "https://github.com/langchain-ai/langchain",
+    "externalUrl": "https://www.langchain.com/",
+    "firstimage": "langchainIcon",
+    "secondimage": null
+  },
+  {
+    "title": "Trello",
+    "description": "Para o meu gerenciamento pessoal e profissional, utilizo o Trello com boards segmentados para cada nicho de atuação. Acredito que um planejamento bem elaborado é um divisor de águas na vida de qualquer ser humano, pois nos permite entender nossos projetos e próximos passos de maneira clara e eficiente. O Trello, com sua interface amigável e intuitiva, é a ferramenta que me permite aplicar essa organização em todas as áreas da minha vida, desde tarefas diárias até o planejamento de projetos complexos.",
+    "techStack": [
+      "Trello",
+      "Gestão de Projetos",
+      "Metodologias Ágeis",
+      "Kanban",
+      "Produtividade",
+      "Organização"
+    ],
+    "githubUrl": "https://trello.com/",
+    "externalUrl": "https://trello.com/",
+    "firstimage": "trelloIcon",
+    "secondimage": null
+  }
+]

@@ -1,0 +1,129 @@
+[
+  {
+    "title": "⚙️ DevOps Stacks (Monorepo)",
+    "description": "Este repositório funciona como um monorepo, abrigando uma coleção de stacks de DevOps independentes e prontas para uso. Cada pasta é um projeto autocontido, provisionado com Docker Compose e acompanhado de scripts de automação (.sh) que cuidam da criação e configuração completa dos ambientes. Essa abordagem permite iniciar rapidamente serviços específicos, tornando-o um toolkit prático para acelerar a configuração de ambientes de desenvolvimento e teste.",
+    "techStack": [
+      "Docker",
+      "Docker Compose",
+      "Grafana",
+      "WireGuard",
+      "MariaDB",
+      "MinIO",
+      "Prometheus",
+      "Nginx Proxy Manager",
+      "Portainer",
+      "PostgreSQL"
+    ],
+    "githubUrl": "https://github.com/richwrd/devops-stacks",
+    "externalUrl": null,
+    "firstimage": null,
+    "secondimage": null
+  },
+  {
+    "title": "🗄️ PostgreSQL HA Cluster Lab",
+    "description": "Projeto de TCC focado na implementação e análise de um cluster PostgreSQL de alta disponibilidade usando ferramentas open-source. A solução utiliza Patroni para gerenciamento de failover automático, etcd como serviço de descoberta, e Pgpool-II para balanceamento de carga, tudo orquestrado via Docker Compose. O projeto foi desenvolvido com uma arquitetura minimalista para facilitar o entendimento dos mecanismos de resiliência do banco de dados.",
+    "techStack": [
+      "PostgreSQL",
+      "Patroni",
+      "etcd",
+      "Pgpool-II",
+      "Docker",
+      "Docker Compose",
+      "Python",
+      "WireGuard"
+    ],
+    "githubUrl": "https://github.com/richwrd/postgres-ha-cluster-lab",
+    "externalUrl": null,
+    "firstimage": null,
+    "secondimage": null
+  },
+  {
+    "title": "🏐 AlugueQuadras",
+    "description": "Plataforma completa para gerenciamento de aluguel de quadras esportivas. Desenvolvi o back-end com autenticação, sistema de reservas, pagamentos online, notificações e CRUD completo. No DevOps, atuei na automação de deploy, CI/CD e escalabilidade para operação 24/7 com alta disponibilidade. Projeto focado em usabilidade, segurança (LGPD) e performance.",
+    "techStack": [
+      "NestJS",
+      "PostgreSQL",
+      "Docker",
+      "CI/CD",
+      "React Native",
+      "AWS"
+    ],
+    "githubUrl": "https://github.com/AllanOgawa/AlugueQuadras",
+    "externalUrl": "https://back-end.aluguequadras.com/docs",
+    "firstimage": null,
+    "secondimage": null
+  },
+  {
+    "title": "🎙️ Speech Analytics",
+    "description": "Plataforma de processamento contínuo de áudios de call centers, com extração de dados via AWS S3, análise de sentimentos, detecção de silêncio e transcrição. As informações são estruturadas e armazenadas em PostgreSQL, com execução 24/7 via CLI automatizada. Ideal para times que desejam insights objetivos a partir de interações por voz.",
+    "techStack": [
+      "Python",
+      "PostgreSQL",
+      "AWS S3",
+      "CLI",
+      "Threading",
+      "Async (em progresso)"
+    ],
+    "githubUrl": null,
+    "externalUrl": null,
+    "firstimage": null,
+    "secondimage": null
+  },
+  {
+    "title": "🐘 PgAuditGraph",
+    "description": "Solução leve e extensível de auditoria DML para PostgreSQL, com controle dinâmico por schema e logs estruturados em JSONB. Ideal para desenvolvedores, DBAs e times de infraestrutura que precisam de rastreabilidade confiável. Em breve: integração com Grafana para visualização em tempo real e implantação via Docker.",
+    "techStack": [
+      "PostgreSQL",
+      "PL/pgSQL",
+      "Grafana (em breve)",
+      "Docker"
+    ],
+    "githubUrl": "https://github.com/richwrd/PgAuditGraph",
+    "externalUrl": null,
+    "firstimage": null,
+    "secondimage": null
+  },
+  {
+    "title": "📝 Generate Contrato de Venda e Compra",
+    "description": "Aplicação web desenvolvida com Streamlit para geração automatizada de contratos de venda e compra de imóveis. O projeto oferece uma interface intuitiva e amigável que permite criar contratos de forma rápida e eficiente, simplificando processos burocráticos do setor imobiliário. A solução utiliza Python e ambiente virtual para garantir isolamento de dependências e fácil instalação.",
+    "techStack": [
+      "Python",
+      "Streamlit",
+      "Virtual Environment"
+    ],
+    "githubUrl": "https://github.com/richwrd/Generate-ContratoImovel",
+    "externalUrl": null,
+    "firstimage": null,
+    "secondimage": null
+  },
+  {
+    "title": "🛍️ SimpleECommerce",
+    "description": "Sistema completo de e-commerce com front-end em Vue.js e back-end em Node.js com MongoDB. Possui autenticação, gerenciamento de produtos e carrinho, além de persistência real de dados. Ideal para aprendizado de aplicações fullstack com API REST.",
+    "techStack": [
+      "Vue.js",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "JavaScript"
+    ],
+    "githubUrl": "https://github.com/richwrd/SimpleECommerce",
+    "externalUrl": null,
+    "firstimage": null,
+    "secondimage": null
+  },
+  {
+    "title": "🧙 PotterWiki",
+    "description": "Enciclopédia digital baseada no universo de Harry Potter, integrando uma API pública com uma interface leve e responsiva. Permite a consulta de personagens, casas e varinhas, com design simples e navegação intuitiva. Ideal como projeto prático para consumo de APIs REST e construção de interfaces reativas.",
+    "techStack": [
+      "React",
+      "JavaScript",
+      "API REST",
+      "HTML",
+      "CSS"
+    ],
+    "githubUrl": "https://github.com/richwrd/PotterWiki",
+    "externalUrl": null,
+    "firstimage": null,
+    "secondimage": null
+  }
+]

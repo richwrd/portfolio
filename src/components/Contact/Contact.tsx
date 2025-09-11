@@ -44,7 +44,7 @@ export function Contact() {
             href="mailto:eduardorichwrd@gmail.com"
             style={{ color: 'white', paddingLeft: 15 }}
           >
-            eduardorichwrd@gmail.com
+            contato@eduardorichard.com
           </a>
         </div>
 

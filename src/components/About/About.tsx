@@ -12,7 +12,7 @@ export function About() {
         </ScrollAnimation>
         <ScrollAnimation animateIn="fadeInLeft" delay={0.1 * 1000}>
           <p>
-            Fala aí! Sou o Richard 👋 — quase engenheiro de software (formando em julho🤞) e completamente apaixonado por resolver problemas com código. Acredito que tecnologia bem aplicada transforma projetos e melhora a vida das pessoas de verdade.
+            Fala aí! Sou o Richard 👋 — engenheiro de software e completamente apaixonado por resolver problemas com código. Acredito que tecnologia bem aplicada transforma projetos e melhora a vida das pessoas de verdade.
             <br /><br />
             Gosto de desafios e encaro cada problema como uma oportunidade de aprendizado. Bugs me despertam curiosidade, e novas ideias sempre merecem ser exploradas. Valorizo a criatividade, o pensamento fora da caixa e aquele entusiasmo constante por inovação — geralmente acompanhado de café e um bom git commit -m "mais uma ideia promissora".            <br /><br />
             Na prática, minha stack gira em torno de:
