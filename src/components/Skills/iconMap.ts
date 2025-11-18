@@ -6,7 +6,7 @@ import linuxIcon from "../../assets/linux.svg";
 import dockerIcon from "../../assets/docker.svg";
 import nestjsIcon from "../../assets/nestjs.svg";
 import expogoIcon from "../../assets/expo.svg";
-import patroniIcon from "../../assets/patroni_rec.png";
+import patroniIcon from "../../assets/patroni.png";
 import pgpoolIcon from "../../assets/pgpool.png";
 import grafanaIcon from "../../assets/grafana.svg";
 import prometheusIcon from "../../assets/prometheus.svg";
