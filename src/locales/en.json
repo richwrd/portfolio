@@ -1,0 +1,88 @@
+{
+  "common": {
+    "name": "Eduardo Richard",
+    "jobTitle": "Software Engineer",
+    "location": "Maringá, PR - Brazil",
+    "timezone": "America/Sao_Paulo"
+  },
+  "nav": {
+    "myStory": "My Story",
+    "howIWork": "How I Work",
+    "expertise": "Expertise",
+    "posts": "Posts",
+    "letsTalk": "Let's Talk",
+    "home": "Home"
+  },
+  "status": {
+    "online": {
+      "label": "Online",
+      "headline": "AVAILABLE",
+      "message": "I'm currently active at my desk. It's a great time to reach out for a quick response.",
+      "responseTime": "Fast"
+    },
+    "holidays": {
+      "label": "On Leave",
+      "headline": "ON VACATION",
+      "message": "I'm currently away taking some time off. I'll get back to you as soon as I return.",
+      "responseTime": "Slow"
+    },
+    "offline": {
+      "label": "Offline",
+      "headline": "AWAY",
+      "message": "I'm currently not at my computer. Feel free to leave a message, I'll reply when I'm back.",
+      "responseTime": "Later"
+    },
+    "live": "Live",
+    "statusMonitor": "Status Monitor",
+    "locationLabel": "Location",
+    "localTime": "Local Time",
+    "response": "Response",
+    "connection": "Connection",
+    "stable": "Stable",
+    "howItWorks": "How it works",
+    "howItWorksDescription": "This status indicator is synced in real-time with my computer's activity. It lets you know if I'm currently at my desk and available to chat, or if I'm away and might take a bit longer to respond.",
+    "verifiedPresence": "Verified Presence",
+    "liveSync": "Live Sync"
+  },
+  "hero": {
+    "headline1": "Crafting efficient,",
+    "headline2": "scalable solutions",
+    "headline3": "in",
+    "headline4": "software & web.",
+    "description": "I'm Eduardo Richard — full-stack engineer, code artisan, digital problem solver. Turning complex problems into elegant, user-centric digital experiences.",
+    "startProject": "Start a Project",
+    "howIWork": "How I Work",
+    "stats": {
+      "yearsExperience": {
+        "description": "Years Experience",
+        "value": "+4"
+      },
+      "projectsCompleted": {
+        "description": "Projects Completed",
+        "value": "15"
+      },
+      "clientSatisfaction": {
+        "description": "Client Satisfaction",
+        "value": "100%"
+      }
+    }
+  },
+  "footer": {
+    "copyright": "Eduardo Richard. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "contact": "Contact",
+    "tagline": "What can I do for you?",
+    "explore": "Explore",
+    "connect": "Connect with me",
+    "promptEngineered": {
+      "title": "How This Site Was Built",
+      "subtitle": "Built with AI, guided by human vision",
+      "p1": "Here's the thing — this entire website was created 100% by AI, but don't worry, I was watching closely the whole time! Think of me as the director and the AI as the talented crew bringing the vision to life.",
+      "p2": "Every line of code, every design decision, and every animation you see here was crafted through careful prompt engineering. I guided the process, refined the outputs, and made sure everything aligned with my vision — but the heavy lifting? That was all AI.",
+      "p3": "This whole project was built using <highlight>vibe coding</highlight> — that flow state where you just go with the feeling, iterate on the fly, and let the creative process guide you. No rigid planning, just pure experimentation and refinement until it feels right.",
+      "p4": "It's pretty wild what's possible when you combine human creativity with AI capabilities. This site is a testament to that collaboration — showing that with the right prompts, a clear vision, and a good vibe, you can build something truly special.",
+      "badge": "100% AI-generated • 100% human-guided"
+    }
+  }
+}

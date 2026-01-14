@@ -1,0 +1,87 @@
+{
+  "common": {
+    "name": "Eduardo Richard",
+    "jobTitle": "Engenheiro de Software",
+    "location": "Maringá, PR - Brasil",
+    "timezone": "America/Sao_Paulo"
+  },
+  "nav": {
+    "myStory": "Minha História",
+    "howIWork": "Como Trabalho",
+    "expertise": "Expertise",
+    "posts": "Posts",
+    "letsTalk": "Vamos Conversar",
+    "home": "Início"
+  },
+  "status": {
+    "online": {
+      "label": "Online",
+      "headline": "DISPONÍVEL",
+      "message": "Estou atualmente ativo na minha mesa. É um ótimo momento para entrar em contato para uma resposta rápida.",
+      "responseTime": "Rápido"
+    },
+    "holidays": {
+      "label": "De Férias",
+      "headline": "EM FÉRIAS",
+      "message": "Estou atualmente ausente tirando um tempo de folga. Retornarei assim que voltar.",
+      "responseTime": "Lento"
+    },
+    "offline": {
+      "label": "Offline",
+      "headline": "AUSENTE",
+      "message": "Não estou no computador no momento. Fique à vontade para deixar uma mensagem, responderei quando voltar.",
+      "responseTime": "Depois"
+    },
+    "live": "Ao Vivo",
+    "statusMonitor": "Monitor de Status",
+    "locationLabel": "Localização",
+    "localTime": "Hora Local",
+    "response": "Resposta",
+    "connection": "Conexão",
+    "stable": "Estável",
+    "howItWorks": "Como funciona",
+    "howItWorksDescription": "Este indicador de status é sincronizado em tempo real com a atividade do meu computador. Ele permite que você saiba se estou disponível para conversar ou se estou ausente e posso demorar um pouco mais para responder.",
+    "verifiedPresence": "Presença Verificada",
+    "liveSync": "Sinc. ao Vivo"
+  },
+  "hero": {
+    "headline1": "Do Código",
+    "headline2": "à Infraestrutura",
+    "headline3": "",
+    "headline4": "Soluções Completas",
+    "description": "Olá, sou Eduardo Richard. Minha expertise une o desenvolvimento de APIs ágeis com a solidez da administração de sistemas (Sysadmin). \n Gosto de garantir que tudo funcione em harmonia: desde a query mais complexa no PostgreSQL até a segurança da rede na Cloud. Crio sistemas transparentes, rápidos e, acima de tudo, confiáveis.",
+    "startProject": "Iniciar Projeto",
+    "howIWork": "Como Trabalho",
+    "stats": {
+      "yearsExperience": {
+        "description": "Anos de Experiência",
+        "value": "+4"
+      },
+      "projectsCompleted": {
+        "description": "Projetos Concluídos",
+        "value": "15"
+      },
+      "clientSatisfaction": {
+        "description": "Satisfação do Cliente",
+        "value": "100%"
+      }
+    }
+  },
+  "footer": {
+    "copyright": "Eduardo Richard. Todos os direitos reservados.",
+    "privacyPolicy": "Política de Privacidade",
+    "contact": "Contato",
+    "tagline": "O que posso fazer por você?",
+    "explore": "Explorar",
+    "connect": "Conecte-se comigo",
+    "promptEngineered": {
+      "title": "Como Este Site Foi Construído",
+      "subtitle": "Construído com IA, guiado pela visão humana",
+      "p1": "Olha só — este site inteiro foi criado 100% por IA, mas relaxa, eu estava acompanhando de perto o tempo todo! Pense em mim como o diretor e na IA como a equipe talentosa dando vida à visão.",
+      "p2": "Cada linha de código, cada decisão de design e cada animação que você vê aqui foi criada através de uma engenharia de prompts cuidadosa. Eu guiei o processo, refinei os resultados e garanti que tudo estivesse alinhado com minha visão — mas o trabalho pesado? Isso foi tudo IA.",
+      "p3": "Todo esse projeto foi construído usando <highlight>vibe coding</highlight> — aquele estado de flow onde você só vai com o feeling, itera no momento, e deixa o processo criativo te guiar. Sem planejamento rígido, só experimentação pura e refinamento até que pareça certo.",
+      "p4": "É bem louco o que é possível quando você combina criatividade humana com capacidades de IA. Este site é um testemunho dessa colaboração — mostrando que com os prompts certos, uma visão clara e uma boa vibe, você pode construir algo verdadeiramente especial.",
+      "badge": "100% gerado por IA • 100% guiado por humano"
+    }
+  }
+}
