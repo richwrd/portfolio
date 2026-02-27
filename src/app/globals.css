@@ -1,14 +1,33 @@
-@import "tailwindcss"; /* Force Rebuild */
+@import "tailwindcss";
 
 :root {
+  /* Tema Base */
   --background: #0d1117;
   --foreground: #f3f4f6;
+
+  /* Cores Principais */
   --primary: #06b6d4;
   --primary-light: #22d3ee;
   --primary-dark: #0891b2;
   --secondary: #818cf8;
   --secondary-light: #a5b4fc;
   --secondary-dark: #6366f1;
+
+  /* Compatibilidade Shadcn (Mapeado para Dark) */
+  --card: #161b22;
+  --card-foreground: #f3f4f6;
+  --popover: #0d1117;
+  --popover-foreground: #f3f4f6;
+  --muted: #21262d;
+  --muted-foreground: #8b949e;
+  --accent: #21262d;
+  --accent-foreground: #f3f4f6;
+  --destructive: #7f1d1d;
+  --destructive-foreground: #f3f4f6;
+  --border: #30363d;
+  --input: #30363d;
+  --ring: #06b6d4;
+  --radius: 0.625rem;
 }
 
 @theme inline {
@@ -20,16 +39,60 @@
   --color-secondary: var(--secondary);
   --color-secondary-light: var(--secondary-light);
   --color-secondary-dark: var(--secondary-dark);
+
+  /* Mapeamento Shadcn para Tailwind v4 */
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius: var(--radius);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
   --animate-gradient: gradient 8s linear infinite;
   --animate-code-rain: code-rain linear infinite;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
 
   @keyframes gradient {
     0% {
       background-position: 0% 50%;
     }
+
     100% {
       background-position: 300% 50%;
     }
@@ -40,12 +103,15 @@
       transform: translateY(-100vh);
       opacity: 0;
     }
+
     10% {
       opacity: 1;
     }
+
     90% {
       opacity: 1;
     }
+
     100% {
       transform: translateY(100vh);
       opacity: 0;
@@ -53,10 +119,12 @@
   }
 
   @keyframes gradient-shift {
+
     0%,
     100% {
       background-position: 0% 50%;
     }
+
     50% {
       background-position: 100% 50%;
     }
@@ -66,18 +134,35 @@
     from {
       transform: rotate(0deg);
     }
+
     to {
       transform: rotate(360deg);
     }
   }
+
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --radius-md: calc(var(--radius) - 2px);
+
+  --radius-lg: var(--radius);
+
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --radius-4xl: calc(var(--radius) + 16px)
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), sans-serif;
-  overflow-x: hidden;
-  width: 100%;
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), sans-serif;
+    overflow-x: hidden;
+    width: 100%;
+  }
 }
 
 /* Performance optimizations */
@@ -93,7 +178,6 @@ body {
 }
 
 /* Optimize rendering for off-screen content */
-
 
 /* Optimize scroll performance */
 html {
@@ -124,12 +208,10 @@ html {
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    180deg,
-    var(--primary) 0%,
-    var(--secondary) 50%,
-    var(--primary) 100%
-  );
+  background: linear-gradient(180deg,
+      var(--primary) 0%,
+      var(--secondary) 50%,
+      var(--primary) 100%);
   box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
 }
 
@@ -161,31 +243,29 @@ html.lenis body {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 /* Animated Gradient Utility Classes */
 .gradient-animated {
-  background: linear-gradient(
-    to right,
-    var(--secondary) 0%,
-    var(--primary) 25%,
-    var(--primary-light) 75%,
-    var(--secondary) 100%
-  );
+  background: linear-gradient(to right,
+      var(--secondary) 0%,
+      var(--primary) 25%,
+      var(--primary-light) 75%,
+      var(--secondary) 100%);
   background-size: 300% auto;
   animation: gradient 8s linear infinite;
 }
 
 .gradient-animated-text {
-  background: linear-gradient(
-    to right,
-    var(--secondary) 0%,
-    var(--primary) 25%,
-    var(--primary-light) 75%,
-    var(--secondary) 100%
-  );
+  background: linear-gradient(to right,
+      var(--secondary) 0%,
+      var(--primary) 25%,
+      var(--primary-light) 75%,
+      var(--secondary) 100%);
   background-size: 300% auto;
   background-clip: text;
   -webkit-background-clip: text;
@@ -195,13 +275,11 @@ html.lenis body {
 }
 
 .gradient-animated-glow {
-  background: linear-gradient(
-    to right,
-    rgba(129, 140, 248, 0.3) 0%,
-    rgba(6, 182, 212, 0.3) 25%,
-    rgba(34, 211, 238, 0.3) 75%,
-    rgba(129, 140, 248, 0.3) 100%
-  );
+  background: linear-gradient(to right,
+      rgba(129, 140, 248, 0.3) 0%,
+      rgba(6, 182, 212, 0.3) 25%,
+      rgba(34, 211, 238, 0.3) 75%,
+      rgba(129, 140, 248, 0.3) 100%);
   background-size: 300% auto;
   animation: gradient 8s linear infinite;
 }

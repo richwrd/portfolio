@@ -14,89 +14,28 @@ import {
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import ScrollingBackgroundText from "../effects/ScrollingBackgroundText";
+import { useLanguage } from "@/context/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const skills = [
+const skillsMetadata = [
   {
-    id: "frontend",
-    title: "FRONTEND",
-    subtitle: "Digital Experience",
-    description:
-      "Crafting immersive digital journeys that captivate and convert. From high-performance landing pages to complex web applications, I build pixel-perfect interfaces that users love.",
-    details: [
-      "React / React Native",
-      "Next.js / Remix",
-      "Angular / Vue",
-      "WordPress / Elementor",
-    ],
-    icon: Globe,
-    color: "#06b6d4",
-    gradient: "from-cyan-500 to-blue-600",
+    id: "devops",
+    icon: CloudCog,
+    color: "#10B981",
+    gradient: "from-emerald-500 to-teal-600",
   },
   {
     id: "backend",
-    title: "BACKEND",
-    subtitle: "System Architecture",
-    description:
-      "Designing robust, scalable server-side solutions that power your business logic. Secure APIs, efficient databases, and microservices architecture built for high availability.",
-    details: [
-      "Node.js / TypeScript",
-      "Python / Go",
-      "PHP / Laravel",
-      "System Design",
-    ],
     icon: Server,
     color: "#8B5CF6",
     gradient: "from-violet-500 to-purple-600",
   },
   {
-    id: "web3",
-    title: "WEB3",
-    subtitle: "Decentralized Future",
-    description:
-      "Pioneering the next generation of the internet. Smart contract development, DApp integration, and blockchain solutions that bring transparency and trust to your applications.",
-    details: [
-      "Blockchain / Crypto",
-      "Smart Contracts",
-      "DeFi Protocols",
-      "DApps Architecture",
-    ],
-    icon: Coins,
-    color: "#F59E0B",
-    gradient: "from-amber-500 to-orange-600",
-  },
-  {
-    id: "ai",
-    title: "AI",
-    subtitle: "Intelligent Solutions",
-    description:
-      "Integrating cutting-edge artificial intelligence to automate processes and create smarter applications. Leveraging LLMs and predictive models to unlock new possibilities.",
-    details: [
-      "LLM Integration",
-      "OpenAI / Anthropic",
-      "AI Agents",
-      "Predictive Models",
-    ],
-    icon: Bot,
-    color: "#EC4899",
-    gradient: "from-pink-500 to-rose-600",
-  },
-  {
-    id: "devops",
-    title: "DEVOPS",
-    subtitle: "Cloud Infrastructure",
-    description:
-      "Automating the bridge between code and deployment. CI/CD pipelines, container orchestration, and cloud infrastructure management ensuring your software runs smoothly everywhere.",
-    details: [
-      "Docker / Kubernetes",
-      "CI / CD Pipelines",
-      "Agile Methodology",
-      "Robot Framework",
-    ],
-    icon: CloudCog,
-    color: "#10B981",
-    gradient: "from-emerald-500 to-teal-600",
+    id: "data",
+    icon: Globe,
+    color: "#06b6d4",
+    gradient: "from-cyan-500 to-blue-600",
   },
 ];
 
@@ -112,12 +51,15 @@ interface SkillCardProps {
     gradient: string;
   };
   index: number;
+  totalSkills: number;
   isMobile: boolean;
 }
 
-function SkillCard({ skill, index, isMobile }: SkillCardProps) {
-  const rangeStart = index * 0.2;
-  const rangeEnd = (index + 1) * 0.2;
+function SkillCard({ skill, index, totalSkills, isMobile }: SkillCardProps) {
+  const { t } = useLanguage();
+  const step = 1 / totalSkills;
+  const rangeStart = index * step;
+  const rangeEnd = (index + 1) * step;
 
   const enterStart =
     index === 0
@@ -503,7 +445,7 @@ function SkillCard({ skill, index, isMobile }: SkillCardProps) {
             className="inline-flex items-center gap-2 sm:gap-3 text-base sm:text-lg font-bold hover:gap-4 sm:hover:gap-6 transition-all duration-300 group w-fit cursor-pointer"
             style={{ color: skill.color }}
           >
-            Start Project{" "}
+            {t("skills.startProject")}{" "}
             <ArrowRight className="w-6 h-6" style={{ color: skill.color }} />
           </Link>
         </div>
@@ -546,13 +488,15 @@ interface NavigationDotProps {
     color: string;
   };
   index: number;
+  totalSkills: number;
   containerRef: React.RefObject<HTMLElement | null>;
 }
 
-function NavigationDot({ skill, index, containerRef }: NavigationDotProps) {
+function NavigationDot({ skill, index, totalSkills, containerRef }: NavigationDotProps) {
   const dotRef = useRef<HTMLDivElement>(null);
-  const rangeStart = index * 0.2;
-  const rangeEnd = index * 0.2 + 0.2;
+  const step = 1 / totalSkills;
+  const rangeStart = index * step;
+  const rangeEnd = (index + 1) * step;
 
   const lerp = (start: number, end: number, t: number) =>
     start + (end - start) * t;
@@ -639,7 +583,7 @@ function ScrollingBackgroundTextWrapper({
     const scrollTrigger = ScrollTrigger.create({
       trigger: containerRef.current,
       start: "top bottom",
-      end: "bottom-=400vh top",
+      end: "bottom-=300vh top",
       scrub: true,
       onUpdate: (self) => {
         setProgress(self.progress);
@@ -663,8 +607,19 @@ function ScrollingBackgroundTextWrapper({
 }
 
 export default function SkillsShowcase() {
+  const { t, tKeys } = useLanguage();
   const containerRef = useRef<HTMLElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+
+  const skills = skillsMetadata.map((skill) => ({
+    ...skill,
+    title: t(`skills.${skill.id}.title`),
+    subtitle: t(`skills.${skill.id}.subtitle`),
+    description: t(`skills.${skill.id}.description`),
+    details: tKeys(`skills.${skill.id}.details`).map((key) =>
+      t(`skills.${skill.id}.details.${key}`)
+    ),
+  }));
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -674,7 +629,7 @@ export default function SkillsShowcase() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative h-[800vh] w-full" id="services">
+    <section ref={containerRef} className="relative h-[800vh] w-full" id="skills">
       <div className="sticky overflow-hidden top-0 h-screen flex items-center justify-center">
         <div className="absolute bottom-6 sm:bottom-12 left-4 sm:left-1/2 sm:-translate-x-1/2 z-50 flex items-center gap-3 sm:gap-4 bg-black/40 backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 rounded-full border border-white/10 overflow-x-auto max-w-[calc(100vw-2rem)] sm:max-w-fit no-scrollbar">
           {skills.map((skill, index) => (
@@ -682,6 +637,7 @@ export default function SkillsShowcase() {
               key={skill.id}
               skill={skill}
               index={index}
+              totalSkills={skills.length}
               containerRef={containerRef}
             />
           ))}
@@ -694,14 +650,9 @@ export default function SkillsShowcase() {
             WebkitTextStroke: "2px rgba(255,255,255,0.08)",
           }}
         >
-          CODE &bull; COFFEE &bull;{" "}
-          <span className="text-primary/10" style={{ WebkitTextStroke: "0px" }}>
-            INNOVATION
-          </span>{" "}
-          &bull; CREATIVITY &bull;{" "}
-          <span className="text-primary/10" style={{ WebkitTextStroke: "0px" }}>
-            PASSION &bull;
-          </span>{" "}
+          {t("skills.scrollingText.0")}
+          &bull; {t("skills.scrollingText.1")}
+          &bull; {t("skills.scrollingText.2")}
         </ScrollingBackgroundTextWrapper>
 
         <div className="relative w-full h-full flex items-center justify-center perspective-distant overflow-visible">
@@ -710,6 +661,7 @@ export default function SkillsShowcase() {
               key={skill.id}
               skill={skill}
               index={index}
+              totalSkills={skills.length}
               isMobile={isMobile}
             />
           ))}

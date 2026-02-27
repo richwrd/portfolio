@@ -2,58 +2,36 @@
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Briefcase, GraduationCap, Trophy } from "lucide-react";
+import { Briefcase, GraduationCap } from "lucide-react";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import TechStack3D from "../effects/TechStack3D";
+import GlassSurface from "../effects/GlassSurface";
+import { useLanguage } from "@/context/LanguageContext";
+import LaserFlow from "../effects/LaserFlow";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const experiences = [
-  {
-    year: "Present",
-    title: "Fullstack Software Developer",
-    company: "Freelance",
-    description:
-      "Orchestrating digital symphonies for agencies and startups worldwide.",
-    icon: Briefcase,
-  },
-  {
-    year: "Previous",
-    title: "Software Engineer",
-    company: "Domotz",
-    description: "Building scalable network monitoring solutions.",
-    icon: Briefcase,
-  },
-  {
-    year: "Previous",
-    title: "Android & Web Developer",
-    company: "Meedori Agency",
-    description: "Crafting mobile and web experiences.",
-    icon: Briefcase,
-  },
-  {
-    year: "Early Days",
-    title: "Growing Startups",
-    company: "TIM WCAP",
-    description: "Accelerating innovation in the tech ecosystem.",
-    icon: Trophy,
-  },
-  {
-    year: "Education",
-    title: "University Studies",
-    company: "Catania, Sicily",
-    description: "Laying the foundation for a career in technology.",
-    icon: GraduationCap,
-  },
-];
+// Mapeia ícones com base na chave da experiência
+function getExperienceIcon(key: string) {
+  if (key === "education" || key === "academic") return GraduationCap;
+  return Briefcase;
+}
+
+interface ExperienceCardProps {
+  expKey: string;
+  index: number;
+  spotlightIntensity?: number;
+  glowIntensity?: number;
+}
 
 function ExperienceCard({
-  exp,
+  expKey,
   index,
-}: {
-  exp: (typeof experiences)[0];
-  index: number;
-}) {
+  spotlightIntensity = 0,
+  glowIntensity = 0,
+}: ExperienceCardProps) {
+  const { t } = useLanguage();
+  const Icon = getExperienceIcon(expKey);
   const [isMobile, setIsMobile] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
@@ -199,14 +177,14 @@ function ExperienceCard({
       if (spotlightRef.current) {
         gsap.set(spotlightRef.current, {
           background: `radial-gradient(650px circle at ${x * 100}% ${y * 100
-            }%, rgba(var(--primary-rgb), 0.15), transparent 80%)`,
+            }%, rgba(var(--primary-rgb), ${spotlightIntensity}), transparent 80%)`,
         });
       }
 
       if (glowRef.current) {
         gsap.set(glowRef.current, {
           background: `radial-gradient(400px circle at ${x * 100}% ${y * 100
-            }%, rgba(var(--primary-rgb), 0.2), transparent 70%)`,
+            }%, rgba(var(--primary-rgb), ${glowIntensity}), transparent 70%)`,
         });
       }
 
@@ -239,66 +217,69 @@ function ExperienceCard({
           transformStyle: isMobile ? "flat" : "preserve-3d",
           perspective: isMobile ? "none" : "1000px",
         }}
-        className="flex-1 relative rounded-2xl border border-white/10 bg-white/5 overflow-hidden group/card transition-shadow duration-300 transform-none md:transform"
+        className="flex-1 relative rounded-2xl group/card transition-shadow duration-300 transform-none md:transform"
       >
-        {!isMobile && (
-          <div
-            ref={spotlightRef}
-            className="pointer-events-none absolute -inset-px opacity-0 rounded-2xl"
-          />
-        )}
-
-        {!isMobile && (
-          <div
-            ref={glowRef}
-            className="pointer-events-none absolute -inset-1 opacity-0 rounded-2xl"
-            style={{ transform: "translateZ(-10px)" }}
-          />
-        )}
-
-        <div
-          className="relative p-6 z-10"
-          style={{ transform: isMobile ? "none" : "translateZ(20px)" }}
-        >
-          <div className="flex items-center gap-3 mb-3">
-            <span
-              className="text-xs font-mono text-primary/80 px-2 py-1 rounded border border-primary/20 bg-primary/5"
-              style={{ transform: isMobile ? "none" : "translateZ(10px)" }}
-            >
-              {exp.year}
-            </span>
+        <GlassSurface width="100%" height="auto" borderRadius={16}>
+          {!isMobile && (
             <div
-              ref={iconRef}
-              style={{ transform: isMobile ? "none" : "translateZ(10px)" }}
-            >
-              <exp.icon className="w-5 h-5 text-gray-500 group-hover/card:text-primary transition-colors" />
-            </div>
-          </div>
-          <h3
-            className="text-xl font-black text-white mb-1 group-hover/card:text-primary transition-colors"
-            style={{ transform: isMobile ? "none" : "translateZ(15px)" }}
-          >
-            {exp.title}
-          </h3>
+              ref={spotlightRef}
+              className="pointer-events-none absolute -inset-px opacity-0 rounded-2xl z-0"
+            />
+          )}
+
+          {!isMobile && (
+            <div
+              ref={glowRef}
+              className="pointer-events-none absolute -inset-1 opacity-0 rounded-2xl z-0"
+              style={{ transform: "translateZ(-10px)" }}
+            />
+          )}
+
           <div
-            className="text-sm text-gray-400 mb-3 font-medium"
-            style={{ transform: isMobile ? "none" : "translateZ(12px)" }}
+            className="relative p-4 z-10 w-full"
+            style={{ transform: isMobile ? "none" : "translateZ(20px)" }}
           >
-            {exp.company}
+            <div className="flex items-center gap-3 mb-3">
+              <span
+                className="text-xs font-mono text-primary/80 px-2 py-1 rounded border border-primary/20 bg-primary/5"
+                style={{ transform: isMobile ? "none" : "translateZ(10px)" }}
+              >
+                {t(`about.experiences.${expKey}.year`)}
+              </span>
+              <div
+                ref={iconRef}
+                style={{ transform: isMobile ? "none" : "translateZ(10px)" }}
+              >
+                <Icon className="w-5 h-5 text-gray-500 group-hover/card:text-primary transition-colors" />
+              </div>
+            </div>
+            <h3
+              className="text-xl font-black text-white mb-1 group-hover/card:text-primary transition-colors"
+              style={{ transform: isMobile ? "none" : "translateZ(15px)" }}
+            >
+              {t(`about.experiences.${expKey}.title`)}
+            </h3>
+            <div
+              className="text-sm text-gray-400 mb-3 font-medium"
+              style={{ transform: isMobile ? "none" : "translateZ(12px)" }}
+            >
+              {t(`about.experiences.${expKey}.company`)}
+            </div>
+            <p
+              className="text-sm text-gray-500 leading-relaxed group-hover/card:text-gray-400 transition-colors"
+              style={{ transform: isMobile ? "none" : "translateZ(8px)" }}
+            >
+              {t(`about.experiences.${expKey}.description`)}
+            </p>
           </div>
-          <p
-            className="text-sm text-gray-500 leading-relaxed group-hover/card:text-gray-400 transition-colors"
-            style={{ transform: isMobile ? "none" : "translateZ(8px)" }}
-          >
-            {exp.description}
-          </p>
-        </div>
+        </GlassSurface>
       </div>
     </div>
   );
 }
 
 export default function About() {
+  const { t, tKeys } = useLanguage();
   const containerRef = useRef<HTMLElement>(null);
   const storyRef = useRef<HTMLDivElement>(null);
   const h2Ref = useRef<HTMLHeadingElement>(null);
@@ -536,24 +517,24 @@ export default function About() {
                 ref={h2Ref}
                 className="text-4xl sm:text-5xl font-black mb-8 tracking-tight leading-tight"
               >
-                Every great{" "}
+                {t("about.headline.part1")}{" "}
                 <span className="relative inline-block">
-                  <span className="gradient-animated-text">developer</span>
+                  <span className="gradient-animated-text">{t("about.headline.highlight1")}</span>
                   <span
                     ref={glow1Ref}
                     className="absolute inset-0 gradient-animated-text blur-xl opacity-60"
                   >
-                    developer
+                    {t("about.headline.highlight1")}
                   </span>
                 </span>{" "}
-                begins with an even better{" "}
+                {t("about.headline.part2")}{" "}
                 <span className="relative inline-block">
-                  <span className="gradient-animated-text">story.</span>
+                  <span className="gradient-animated-text">{t("about.headline.highlight2")}</span>
                   <span
                     ref={glow2Ref}
                     className="absolute inset-0 gradient-animated-text blur-xl opacity-60"
                   >
-                    story.
+                    {t("about.headline.highlight2")}
                   </span>
                 </span>
               </h2>
@@ -562,24 +543,9 @@ export default function About() {
                 ref={textRef}
                 className="space-y-6 text-lg text-gray-400 leading-relaxed"
               >
-                <p>
-                  Embarking on the rollercoaster ride of my freelance software
-                  development odyssey about 15 years ago, I&apos;ve been the
-                  virtuoso of remote work for esteemed agencies, the go-to
-                  consultant for ambitious startups, and the maestro of
-                  collaboration.
-                </p>
-                <p>
-                  Beneath my seemingly calm exterior lies a quiet confidence,
-                  stirred with a natural curiosity that propels me into
-                  perpetual learning endeavors.
-                </p>
-                <p>
-                  Think of me as a silent wizard, weaving code spells and
-                  conjuring up solutions, all while perfecting my craft in the
-                  ever-ticking clock of time. And yes, I may just be the humble
-                  architect of your next digital masterpiece!
-                </p>
+                <p>{t("about.story.paragraph1")}</p>
+                <p>{t("about.story.paragraph2")}</p>
+                <p>{t("about.story.paragraph3")}</p>
               </div>
             </div>
 
@@ -589,6 +555,7 @@ export default function About() {
           </div>
 
           <div className="relative">
+
             <div className="absolute left-8 top-0 bottom-0 w-px bg-white/5 hidden sm:block" />
 
             <div
@@ -597,13 +564,35 @@ export default function About() {
             />
 
             <div className="space-y-4 sm:space-y-12">
-              {experiences.map((exp, index) => (
-                <ExperienceCard key={index} exp={exp} index={index} />
+              {tKeys("about.experiences").map((key, index) => (
+                <ExperienceCard key={key} expKey={key} index={index} />
               ))}
             </div>
           </div>
         </div>
       </div>
+      {/* <div
+        className="absolute inset-0 hidden sm:block pointer-events-none overflow-hidden"
+      >
+        <LaserFlow
+          horizontalBeamOffset={0.0}
+          verticalBeamOffset={0.0}
+          color="var(--primary)"
+          horizontalSizing={0.5}
+          verticalSizing={5}
+          wispDensity={1}
+          wispSpeed={15}
+          wispIntensity={5}
+          flowSpeed={0.35}
+          flowStrength={0.25}
+          fogIntensity={0.1}
+          fogScale={0.3}
+          fogFallSpeed={0.6}
+          decay={1.1}
+          falloffStart={1.2}
+        />
+      </div> */}
     </section>
+
   );
 }

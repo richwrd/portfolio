@@ -6,11 +6,10 @@
     "timezone": "America/Sao_Paulo"
   },
   "nav": {
-    "myStory": "My Story",
-    "howIWork": "How I Work",
-    "expertise": "Expertise",
-    "posts": "Posts",
-    "letsTalk": "Let's Talk",
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "letsTalk": "CONTACT",
     "home": "Home"
   },
   "status": {
@@ -64,6 +63,107 @@
       "clientSatisfaction": {
         "description": "Client Satisfaction",
         "value": "100%"
+      }
+    }
+  },
+  "about": {
+    "floatingCards": {
+      "codeEditor": {
+        "filename": "MyStory.tsx",
+        "line1": {
+          "const": "const",
+          "varName": "Engineer",
+          "await": "await",
+          "class": "Dev",
+          "method": "create"
+        },
+        "line2": {
+          "key": "role",
+          "value": "Software & Data Engineer"
+        },
+        "line3": {
+          "key": "stack"
+        },
+        "line4": {
+          "tech1": "Python",
+          "tech2": "PostgreSQL"
+        },
+        "line5": {
+          "tech1": "Kubernetes",
+          "tech2": "ETL/SQL"
+        },
+        "line7": {
+          "key": "passion",
+          "value": "Infinity"
+        },
+        "compiling": "Compiling..."
+      },
+      "systemMonitor": {
+        "title": "System Monitor",
+        "status": "Online",
+        "apiGateway": {
+          "label": "API Gateway",
+          "value": "24ms"
+        },
+        "database": {
+          "label": "PostgreSQL",
+          "value": "Connected"
+        },
+        "networkTraffic": {
+          "label": "Network Traffic",
+          "value": "1.2 GB/s"
+        }
+      },
+      "terminal": {
+        "title": "terminal — zsh",
+        "command": "➜ ~ kubectl apply -f deployment.yaml",
+        "output1": "deployment.apps/api configured",
+        "output2": "service/api-gateway unchanged",
+        "output3": "configmap/env-config created",
+        "success": "🚀 Deployed to Production"
+      }
+    },
+    "headline": {
+      "part1": "Tecnologia com",
+      "highlight1": "Propósito",
+      "part2": "focada em transformar",
+      "highlight2": "processos."
+    },
+    "story": {
+      "paragraph1": "Não escrevo apenas código; construo ferramentas que devolvem tempo às pessoas. Minha trajetória é marcada por identificar ineficiências operacionais e criar soluções que reduzem tarefas de meses para horas.",
+      "paragraph2": "Com forte base técnica em Python, PostgreSQL e Infraestrutura, transito entre o desenvolvimento e a operação (DevOps). Acredito que a complexidade deve ficar no sistema, não na mão do usuário.",
+      "paragraph3": "Além da técnica, valorizo o capital humano. Tenho orgulho de ter mentanado mais de 10 desenvolvedores e liderado equipes, garantindo que o conhecimento seja compartilhado e que a tecnologia impulsione o crescimento do negócio."
+    },
+    "experiences": {
+      "present": {
+        "year": "2025 - Atual",
+        "title": "Fundador & Eng. de Software",
+        "company": "Richwrd Studio",
+        "description": "Foco em P&D de infraestrutura Cloud-Native, migração para Kubernetes e arquiteturas de Alta Disponibilidade."
+      },
+      "idbrasil": {
+        "year": "2025 - 2025",
+        "title": "Eng. de Infraestrutura e Dados",
+        "company": "ID Brasil Sistemas",
+        "description": "Automação de inventário via API e otimização crítica de queries (redução de 2min para segundos)."
+      },
+      "tributech": {
+        "year": "2022 - 2024",
+        "title": "Líder Técnico & Fullstack",
+        "company": "Tributech",
+        "description": "Mentoria de equipe, integrações de ETL em escala e automação de geoprocessamento."
+      },
+      "academic": {
+        "year": "Acadêmico",
+        "title": "Pesquisador (TCC)",
+        "company": "Alta Disponibilidade",
+        "description": "Estudo aprofundado em clusters PostgreSQL, Patroni e algoritmos de consenso distribuído."
+      },
+      "education": {
+        "year": "Formação",
+        "title": "Engenharia de Software",
+        "company": "UniCesumar",
+        "description": "Base sólida em arquitetura de software e desenvolvimento de sistemas."
       }
     }
   },

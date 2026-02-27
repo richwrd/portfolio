@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
 import FullScreenSection from "../layout/FullScreenSection";
+import { useLanguage } from "@/context/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,6 +29,7 @@ interface SmallParticle {
 }
 
 export default function ReadyToStart() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const word1Ref = useRef<HTMLHeadingElement>(null);
@@ -501,50 +503,50 @@ export default function ReadyToStart() {
             <div className="mb-8 md:mb-12">
               <h2
                 ref={word1Ref}
-                className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[14rem] 2xl:text-[18rem] font-black leading-none mb-4 md:mb-6 transform-none md:transform relative"
+                className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[11rem] 2xl:text-[14rem] font-black leading-none mb-4 md:mb-6 transform-none md:transform relative"
                 style={{
                   transformStyle: "preserve-3d",
                 }}
               >
                 <span className="relative inline-block">
                   <span className="relative z-10 gradient-animated-text">
-                    CODE.
+                    {t("readyToStart.line1")}
                   </span>
                   <span
                     ref={glow1Ref}
                     className="block absolute inset-0 gradient-animated-text blur-[20px] opacity-60 z-0"
                   >
-                    CODE.
+                    {t("readyToStart.line1")}
                   </span>
                 </span>
               </h2>
 
               <h2
                 ref={word2Ref}
-                className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[14rem] 2xl:text-[18rem] font-black leading-none mb-4 md:mb-6 transform-none md:transform relative"
+                className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[11rem] 2xl:text-[14rem] font-black leading-none mb-4 md:mb-6 transform-none md:transform relative"
                 style={{
                   transformStyle: "preserve-3d",
                 }}
               >
-                <span className="relative z-10 text-white">CREATE.</span>
+                <span className="relative z-10 text-white">{t("readyToStart.line2")}</span>
               </h2>
 
               <h2
                 ref={word3Ref}
-                className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[14rem] 2xl:text-[18rem] font-black leading-none transform-none md:transform relative"
+                className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[11rem] 2xl:text-[14rem] font-black leading-none transform-none md:transform relative"
                 style={{
                   transformStyle: "preserve-3d",
                 }}
               >
                 <span className="relative inline-block">
                   <span className="relative z-10 gradient-animated-text">
-                    CONQUER.
+                    {t("readyToStart.line3")}
                   </span>
                   <span
                     ref={glow3Ref}
                     className="absolute inset-0 gradient-animated-text blur-[20px] opacity-60 z-0"
                   >
-                    CONQUER.
+                    {t("readyToStart.line3")}
                   </span>
                 </span>
               </h2>
@@ -557,8 +559,9 @@ export default function ReadyToStart() {
                 transformStyle: "preserve-3d",
               }}
             >
-              Three words. Infinite possibilities. Every line of code is a step
-              toward something extraordinary.
+              {t("readyToStart.description")}
+              <br />
+              {t("readyToStart.description2")}
             </p>
           </div>
         </div>

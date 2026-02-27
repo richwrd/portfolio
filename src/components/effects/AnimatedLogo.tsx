@@ -20,9 +20,6 @@ interface Edge {
   to: number;
 }
 
-
-
-
 interface EdgeGlow {
   edgeIndex: number;
   progress: number;

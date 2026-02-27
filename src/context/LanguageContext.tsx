@@ -15,6 +15,7 @@ interface LanguageContextType {
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
   tArray: (key: string) => string[];
+  tKeys: (key: string) => string[];
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -81,8 +82,21 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     return [];
   };
 
+  const tKeys = (key: string): string[] => {
+    const value = getNestedValue(translations[currentLang] as Record<string, TranslationValue>, key);
+    if (value && typeof value === "object" && !Array.isArray(value)) {
+      return Object.keys(value);
+    }
+    // Fallback to English
+    const fallback = getNestedValue(translations.en as Record<string, TranslationValue>, key);
+    if (fallback && typeof fallback === "object" && !Array.isArray(fallback)) {
+      return Object.keys(fallback);
+    }
+    return [];
+  };
+
   return (
-    <LanguageContext.Provider value={{ language: currentLang, setLanguage, t, tArray }}>
+    <LanguageContext.Provider value={{ language: currentLang, setLanguage, t, tArray, tKeys }}>
       {children}
     </LanguageContext.Provider>
   );

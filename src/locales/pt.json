@@ -6,11 +6,10 @@
     "timezone": "America/Sao_Paulo"
   },
   "nav": {
-    "myStory": "Minha História",
-    "howIWork": "Como Trabalho",
-    "expertise": "Expertise",
-    "posts": "Posts",
-    "letsTalk": "Vamos Conversar",
+    "about": "Sobre",
+    "skills": "Skills",
+    "projects": "Projetos",
+    "letsTalk": "CONTATO",
     "home": "Início"
   },
   "status": {
@@ -48,22 +47,177 @@
     "headline1": "Do Código",
     "headline2": "à Infraestrutura",
     "headline3": "",
-    "headline4": "Soluções Completas",
-    "description": "Olá, sou Eduardo Richard. Minha expertise une o desenvolvimento de APIs ágeis com a solidez da administração de sistemas (Sysadmin). \n Gosto de garantir que tudo funcione em harmonia: desde a query mais complexa no PostgreSQL até a segurança da rede na Cloud. Crio sistemas transparentes, rápidos e, acima de tudo, confiáveis.",
-    "startProject": "Iniciar Projeto",
-    "howIWork": "Como Trabalho",
+    "headline4": "Cloud-Native & Automação",
+    "description": "Engenheiro de Software com foco em backend e dados. Transformo complexidade técnica em automação eficiente, projetando arquiteturas escaláveis e resilientes.",
+    "startProject": "Ver Projetos",
+    "howIWork": "Minha Stack",
     "stats": {
       "yearsExperience": {
         "description": "Anos de Experiência",
         "value": "+4"
       },
       "projectsCompleted": {
-        "description": "Projetos Concluídos",
-        "value": "15"
+        "description": "Soluções Entregues",
+        "value": "15+"
       },
       "clientSatisfaction": {
-        "description": "Satisfação do Cliente",
-        "value": "100%"
+        "description": "Foco Principal",
+        "value": "Eficiência"
+      }
+    }
+  },
+  "about": {
+    "floatingCards": {
+      "codeEditor": {
+        "filename": "MinhaHistoria.tsx",
+        "line1": {
+          "const": "const",
+          "varName": "Engineer",
+          "await": "await",
+          "class": "Dev",
+          "method": "create"
+        },
+        "line2": {
+          "key": "role",
+          "value": "Fullstack Developer"
+        },
+        "line3": {
+          "key": "stack"
+        },
+        "line4": {
+          "tech1": "Bash",
+          "tech2": "PostgreSQL"
+        },
+        "line5": {
+          "tech1": "TypeScript",
+          "tech2": "Python"
+        },
+        "line7": {
+          "key": "passion",
+          "value": "Infinita"
+        },
+        "compiling": "Compilando..."
+      },
+      "systemMonitor": {
+        "title": "Monitor do Sistema",
+        "status": "Online",
+        "apiGateway": {
+          "label": "API Gateway",
+          "value": "16ms"
+        },
+        "database": {
+          "label": "PostgreSQL",
+          "value": "Conectado"
+        },
+        "networkTraffic": {
+          "label": "Tráfego de Rede",
+          "value": "1.6 GB/s"
+        }
+      },
+      "terminal": {
+        "title": "terminal — zsh",
+        "command": "➜ ~ kubectl apply -f deployment.yaml",
+        "output1": "deployment.apps/api configured",
+        "output2": "service/api-gateway unchanged",
+        "output3": "configmap/env-config created",
+        "success": "🚀 Deploy em Produção"
+      }
+    },
+    "headline": {
+      "part1": "Não é apenas sobre",
+      "highlight1": "Software,",
+      "part2": "é sobre evoluir",
+      "highlight2": "o Negócio."
+    },
+    "story": {
+      "paragraph1": "Não escrevo apenas código; construo ferramentas que devolvem tempo às pessoas. Identifico gargalos operacionais e crio soluções que reduzem tarefas de meses para horas.",
+      "paragraph2": "Transito entre o desenvolvimento e a infraestrutura com forte base em Python e PostgreSQL. Minha regra é clara: a complexidade deve ficar no sistema, nunca na mão do usuário.",
+      "paragraph3": "Como a tecnologia só escala através de pessoas, também foco no capital humano. Já mentorei mais de 10 profissionais, garantindo que o conhecimento técnico seja o verdadeiro motor de crescimento da equipe."
+    },
+    "experiences": {
+      "horus": {
+        "year": "2025 - Atual",
+        "title": "DBA PostgreSQL Pl",
+        "company": "Horus Solutions",
+        "description": "Gerenciamento de clusters PostgreSQL, otimização de consultas, automação de rotinas de manutenção e implementação de soluções de alta disponibilidade usando Patroni e Pgpool2."
+      },
+      "present": {
+        "year": "2025 - Atual",
+        "title": "Fundador & Eng. de Software",
+        "company": "Richwrd Studio",
+        "description": "Foco em P&D de infraestrutura Cloud-Native, migração para Kubernetes e arquiteturas de Alta Disponibilidade."
+      },
+      "idbrasil": {
+        "year": "2025 - 2025",
+        "title": "Eng. de Infraestrutura e Dados",
+        "company": "ID Brasil Sistemas",
+        "description": "Modelagem de dados para BI, automação de inventário de infraestrutura, testes automatizados E2E e otimização de performance SQL."
+      },
+      "tributech": {
+        "year": "2022 - 2024",
+        "title": "Eng. de Dados e Liderança Técnica",
+        "company": "Tributech",
+        "description": "Responsável pela engenharia de dados (ETL/SQL), automação de geoprocessamento e onboarding de +10 profissionais."
+      },
+      "academic": {
+        "year": "Acadêmico",
+        "title": "Pesquisador (TCC)",
+        "company": "Alta Disponibilidade",
+        "description": "Estudo aprofundado em clusters PostgreSQL, Patroni, Pgpool2 e algoritmos de consenso distribuído."
+      },
+      "education": {
+        "year": "Formação",
+        "title": "Engenharia de Software",
+        "company": "UniCesumar",
+        "description": "Base sólida em arquitetura, metodologias, processos e desenvolvimento de software."
+      }
+    }
+  },
+  "readyToStart": {
+    "line1": "PENSAR.",
+    "line2": "PLANEJAR.",
+    "line3": "EXECUTAR.",
+    "description": "Três etapas. Infinitas possibilidades. Um único propósito.",
+    "description2": "Cada passo em direção ao extraordinário."
+  },
+  "skills": {
+    "startProject": "Começar Projeto",
+    "scrollingText": {
+      "0": "PERFORMANCE",
+      "1": "ESCALABILIDADE",
+      "2": "RESILIÊNCIA"
+    },
+    "data": {
+      "title": "Dados & HA",
+      "subtitle": "Engenharia e Resiliência de Dados",
+      "description": "Desenho e otimização de arquiteturas de dados críticas. Especialista em PostgreSQL, replicação, rotinas complexas de ETL e garantia de alta disponibilidade (HA) para operações que não podem parar.",
+      "details": {
+        "0": "PostgreSQL HA / Patroni / Pgpool2 / Pgbouncer",
+        "1": "PL/pgSQL, Modelagem & Otimização SQL",
+        "2": "Pipelines ETL (Pentaho/Hop)",
+        "3": "PostGIS (Geoprocessamento)"
+      }
+    },
+    "backend": {
+      "title": "BACKEND",
+      "subtitle": "Arquitetura de Sistemas",
+      "description": "Desenvolvendo soluções robustas e escaláveis no lado do servidor que impulsionam sua lógica de negócios. APIs seguras, bancos de dados eficientes focando em performance e manutenibilidade.",
+      "details": {
+        "0": "Python / Automação",
+        "1": "Node.js / NestJS",
+        "2": "Microsserviços",
+        "3": "Testes Automatizados"
+      }
+    },
+    "devops": {
+      "title": "DEVOPS",
+      "subtitle": "Infraestrutura em Nuvem",
+      "description": "Automatizando a ponte entre código e implantação. Pipelines CI/CD, orquestração de contêineres e gerenciamento de infraestrutura em nuvem garantindo que seu software funcione sem problemas em todos os lugares.",
+      "details": {
+        "0": "Docker / Kubernetes",
+        "1": "Pipelines CI / CD",
+        "2": "Configuração como Código",
+        "3": "Metodologia Ágil"
       }
     }
   },

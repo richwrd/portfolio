@@ -1,27 +1,17 @@
 "use client";
 
 import { gsap } from "gsap";
-import {
-  Activity,
-  Clock,
-  Github,
-  Globe,
-  Linkedin,
-  Mail,
-  MapPin,
-  MessageSquare,
-  ShieldCheck,
-  Wifi,
-  X,
-  Zap,
-} from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useBackground } from "@/context/BackgroundContext";
 import { useLanguage } from "@/context/LanguageContext";
 import AnimatedName from "../ui/AnimatedName";
 import Button from "../ui/Button";
 import Logo from "../ui/Logo";
+import GradualBlur from "../effects/GradualBlur";
+import GlassSurface from "../effects/GlassSurface";
+import { StatusModal } from "../popups";
 
 function DevToIcon() {
   return (
@@ -51,16 +41,14 @@ export default function Navbar() {
   const [status, setStatus] = useState<StatusType>("offline");
   const [loading, setLoading] = useState(true);
   const [showStatusModal, setShowStatusModal] = useState(false);
-  const [isClosingModal, setIsClosingModal] = useState(false);
   const [time, setTime] = useState("");
   const { cycleTheme } = useBackground();
   const { t, language, setLanguage } = useLanguage();
 
   const navLinks = [
-    { name: t("nav.myStory"), href: "#about" },
-    { name: t("nav.howIWork"), href: "#process" },
-    { name: t("nav.expertise"), href: "#services" },
-    { name: t("nav.posts"), href: "#posts" },
+    { name: t("nav.about"), href: "#about" },
+    { name: t("nav.skills"), href: "#skills" },
+    { name: t("nav.projects"), href: "#projects" },
   ];
 
   const navRef = useRef<HTMLElement>(null);
@@ -72,8 +60,12 @@ export default function Navbar() {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const mobileMenuContentRef = useRef<HTMLDivElement>(null);
   const mobileMenuLinksRef = useRef<(HTMLDivElement | null)[]>([]);
-  const statusModalRef = useRef<HTMLDivElement>(null);
-  const statusModalContentRef = useRef<HTMLDivElement>(null);
+  const statusButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Memoized close handler for StatusModal
+  const handleCloseStatusModal = useCallback(() => {
+    setShowStatusModal(false);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -198,61 +190,7 @@ export default function Navbar() {
     }
   }, [mobileMenuOpen]);
 
-  useEffect(() => {
-    if (!statusModalRef.current || !statusModalContentRef.current) return;
 
-    if (showStatusModal && !isClosingModal) {
-      gsap.set(statusModalRef.current, { opacity: 0 });
-      gsap.set(statusModalContentRef.current, {
-        opacity: 0,
-        scale: 0.95,
-        y: 20,
-      });
-
-      gsap.to(statusModalRef.current, {
-        opacity: 1,
-        duration: 0.3,
-      });
-
-      gsap.to(statusModalContentRef.current, {
-        opacity: 1,
-        scale: 1,
-        y: 0,
-        duration: 0.4,
-        ease: "power2.out",
-      });
-    }
-  }, [showStatusModal, isClosingModal]);
-
-  useEffect(() => {
-    if (
-      !statusModalRef.current ||
-      !statusModalContentRef.current ||
-      !isClosingModal
-    )
-      return;
-
-    gsap.to(statusModalContentRef.current, {
-      opacity: 0,
-      scale: 0.95,
-      y: 20,
-      duration: 0.3,
-      ease: "power2.in",
-    });
-    gsap.to(statusModalRef.current, {
-      opacity: 0,
-      duration: 0.3,
-    });
-  }, [isClosingModal]);
-
-  const handleCloseModal = () => {
-    if (isClosingModal) return;
-    setIsClosingModal(true);
-    setTimeout(() => {
-      setShowStatusModal(false);
-      setIsClosingModal(false);
-    }, 300);
-  };
 
   useEffect(() => {
     const updateTime = () => {
@@ -345,10 +283,19 @@ export default function Navbar() {
         }}
         ref={navRef}
         className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-500 ${isScrolled
-          ? "bg-black/30 backdrop-blur-md h-20 sm:h-16 shadow-lg"
-          : "bg-black/0 backdrop-blur-sm h-20 sm:h-24"
+          ? "h-16 sm:h-16"
+          : "h-20 sm:h-24"
           }`}
       >
+        <GradualBlur
+          position="top"
+          strength={1.5}
+          divCount={8}
+          height="100%"
+          zIndex={-1}
+          exponential={true}
+          curve="ease-out"
+        />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
           <Link
             href="/"
@@ -395,35 +342,67 @@ export default function Navbar() {
             <div ref={navActionsRef} className="hidden md:flex items-center gap-6 lg:gap-4">
               {/* Status Badge */}
               {!loading && (
-                <button
-                  onClick={() => setShowStatusModal(true)}
-                  className="hidden md:flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group text-xs"
+                <GlassSurface
+                  width="auto"
+                  height="auto"
+                  className="hidden md:flex hover:scale-105 transition-transform duration-200"
                 >
-                  <span className="relative flex h-2 w-2">
-                    <span
-                      className={`animate-ping absolute inline-flex h-full w-full rounded-full ${config.color} opacity-75`}
-                    ></span>
-                    <span
-                      className={`relative inline-flex rounded-full h-2 w-2 ${config.color}`}
-                    ></span>
-                  </span>
-                  <span className="font-bold text-white leading-none tracking-wide">
-                    {config.headline}
-                  </span>
-                </button>
+                  <button
+                    ref={statusButtonRef}
+                    onClick={() => setShowStatusModal(true)}
+                    className="flex items-center gap-1 px-2.5 py-1.5 cursor-pointer group text-[10px]"
+                  >
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span
+                        className={`animate-ping absolute inline-flex h-full w-full rounded-full ${config.color} opacity-75`}
+                      ></span>
+                      <span
+                        className={`relative inline-flex rounded-full h-1.5 w-1.5 ${config.color}`}
+                      ></span>
+                    </span>
+                    <span className="font-bold text-white leading-none tracking-wide">
+                      {config.headline}
+                    </span>
+                  </button>
+                </GlassSurface>
               )}
 
-              <Button href="#contact" variant="gradient" size="sm">
-                {t("nav.letsTalk")}
-              </Button>
+              {/* Let's Talk Button - Dual Layer Design */}
+
+              <div className="hidden md:flex items-center gap-6 lg:gap-4">
+
+                <GlassSurface
+                  width="auto"
+                  height="auto"
+                  className="relative group hover:scale-105 transition-transform duration-200"
+                >
+                  <div className="absolute inset-0 rounded-full gradient-animated opacity-25 group-hover:opacity-50 transition-opacity duration-300 blur-[1px] pointer-events-none" />
+                  <Button
+                    href="#contact"
+                    variant="ghost"
+                    size="sm"
+                    className="!rounded-full !px-3 !py-1.5 !text-[10px] text-white font-black tracking-wide hover:bg-transparent relative z-10"
+                  >
+                    {t("nav.letsTalk")}
+                  </Button>
+                </GlassSurface>
+
+              </div>
+
 
               {/* Language Toggle */}
-              <button
-                onClick={() => setLanguage(language === "en" ? "pt" : "en")}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer text-xs font-bold text-white"
+              <GlassSurface
+                width="auto"
+                height="auto"
+                className="hover:scale-105 transition-transform duration-200"
               >
-                {language === "en" ? "PT" : "EN"}
-              </button>
+                <button
+                  onClick={() => setLanguage(language === "en" ? "pt" : "en")}
+                  className="flex items-center gap-1 px-2.5 py-1.5 cursor-pointer text-[10px] font-bold text-white"
+                >
+                  {language === "en" ? "PT" : "EN"}
+                </button>
+              </GlassSurface>
             </div>
           </div>
 
@@ -431,44 +410,64 @@ export default function Navbar() {
           <div className="md:hidden flex items-center gap-3">
             {/* Status Badge - Mobile */}
             {!loading && (
-              <button
-                onClick={() => setShowStatusModal(true)}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group text-xs"
+              <GlassSurface
+                width="auto"
+                height="auto"
+                borderRadius={9999}
+                blur={8}
+                brightness={40}
+                opacity={0.9}
+                backgroundOpacity={0.05}
+                saturation={1.2}
+                className="hover:scale-105 transition-transform duration-200"
               >
-                <span className="relative flex h-2 w-2">
-                  <span
-                    className={`animate-ping absolute inline-flex h-full w-full rounded-full ${config.color} opacity-75`}
-                  ></span>
-                  <span
-                    className={`relative inline-flex rounded-full h-2 w-2 ${config.color}`}
-                  ></span>
-                </span>
-                <span className="font-bold text-white leading-none tracking-wide">
-                  {config.headline}
-                </span>
-              </button>
+                <button
+                  onClick={() => setShowStatusModal(true)}
+                  className="flex items-center gap-1 px-2.5 py-1.5 cursor-pointer group text-[10px]"
+                >
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span
+                      className={`animate-ping absolute inline-flex h-full w-full rounded-full ${config.color} opacity-75`}
+                    ></span>
+                    <span
+                      className={`relative inline-flex rounded-full h-1.5 w-1.5 ${config.color}`}
+                    ></span>
+                  </span>
+                  <span className="font-bold text-white leading-none tracking-wide">
+                    {config.headline}
+                  </span>
+                </button>
+              </GlassSurface>
             )}
 
-            <button
-              className="text-white relative z-50 p-2 cursor-pointer focus:outline-none"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle mobile menu"
+            <GlassSurface
+              width={48}
+              height={48}
+              distortionScale={-200}
+              brightness={20}
+              className="hover:scale-105 transition-transform duration-300 relative z-50"
             >
-              <div className="w-6 h-6 flex flex-col justify-center items-center gap-1.5">
-                <span
-                  ref={hamburgerLine1Ref}
-                  className="w-full h-0.5 bg-white block origin-center"
-                />
-                <span
-                  ref={hamburgerLine2Ref}
-                  className="w-full h-0.5 bg-white block"
-                />
-                <span
-                  ref={hamburgerLine3Ref}
-                  className="w-full h-0.5 bg-white block origin-center"
-                />
-              </div>
-            </button>
+              <button
+                className="text-white w-full h-full flex justify-center items-center cursor-pointer focus:outline-none"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label="Toggle mobile menu"
+              >
+                <div className="w-6 h-6 flex flex-col justify-center items-center gap-1.5">
+                  <span
+                    ref={hamburgerLine1Ref}
+                    className="w-full h-0.5 bg-white block origin-center"
+                  />
+                  <span
+                    ref={hamburgerLine2Ref}
+                    className="w-full h-0.5 bg-white block"
+                  />
+                  <span
+                    ref={hamburgerLine3Ref}
+                    className="w-full h-0.5 bg-white block origin-center"
+                  />
+                </div>
+              </button>
+            </GlassSurface>
           </div>
         </div>
       </nav>
@@ -546,145 +545,14 @@ export default function Navbar() {
       </div>
 
       {/* Status Modal */}
-      {(showStatusModal || isClosingModal) && (
-        <div
-          ref={statusModalRef}
-          onClick={handleCloseModal}
-          className="fixed inset-0 bg-black/60 backdrop-blur-md z-[99999] flex items-center justify-center p-4"
-        >
-          <div
-            ref={statusModalContentRef}
-            onClick={(e) => e.stopPropagation()}
-            className={`bg-[#0D1117] border ${config.borderColor} rounded-2xl p-6 sm:p-8 max-w-md w-full relative shadow-2xl overflow-hidden`}
-          >
-            {/* Background Decoration */}
-            <div
-              className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-${config.color.replace(
-                "bg-",
-                ""
-              )} to-transparent opacity-50`}
-            />
-            <div
-              className={`absolute -top-20 -right-20 w-64 h-64 ${config.color} opacity-[0.03] blur-[80px] rounded-full pointer-events-none`}
-            />
-
-            <div className="absolute top-0 right-0 p-5 z-50">
-              <button
-                onClick={handleCloseModal}
-                className="text-gray-500 hover:text-white transition-colors cursor-pointer p-1 hover:bg-white/5 rounded-lg"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Header */}
-            <div className="flex flex-col gap-4 mb-8 relative z-10">
-              <div className="inline-flex items-center gap-3">
-                <div
-                  className={`relative flex items-center justify-center w-12 h-12 rounded-xl ${config.bgColor} border border-white/5`}
-                >
-                  <Activity className={`w-6 h-6 ${config.textColor}`} />
-                  {status === "online" && (
-                    <span
-                      className={`absolute top-0 right-0 -mt-1 -mr-1 w-3 h-3 ${config.color} rounded-full border-2 border-[#0D1117]`}
-                    />
-                  )}
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-xl font-black text-white tracking-tight">
-                      {config.headline}
-                    </h3>
-                    <span
-                      className={`text-[10px] px-1.5 py-0.5 rounded border ${config.borderColor} ${config.textColor} bg-opacity-10 font-mono uppercase tracking-wider`}
-                    >
-                      {t("status.live")}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-400 font-medium">
-                    {t("status.statusMonitor")}
-                  </p>
-                </div>
-              </div>
-              <p className="text-gray-300 leading-relaxed text-sm border-l-2 border-white/10 pl-4">
-                {config.message}
-              </p>
-            </div>
-
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-3 mb-6 relative z-10">
-              <div className="p-3 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 transition-colors">
-                <div className="flex items-center gap-2 text-gray-400 mb-1">
-                  <MapPin className="w-3.5 h-3.5" />
-                  <span className="text-xs uppercase tracking-wider font-semibold">
-                    {t("status.locationLabel")}
-                  </span>
-                </div>
-                <div className="text-sm text-white font-medium">{t("common.location")}</div>
-              </div>
-              <div className="p-3 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 transition-colors">
-                <div className="flex items-center gap-2 text-gray-400 mb-1">
-                  <Clock className="w-3.5 h-3.5" />
-                  <span className="text-xs uppercase tracking-wider font-semibold">
-                    {t("status.localTime")}
-                  </span>
-                </div>
-                <div
-                  className="text-sm text-white font-medium"
-                  suppressHydrationWarning
-                >
-                  {time || "--:--"}
-                </div>
-              </div>
-              <div className="p-3 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 transition-colors">
-                <div className="flex items-center gap-2 text-gray-400 mb-1">
-                  <MessageSquare className="w-3.5 h-3.5" />
-                  <span className="text-xs uppercase tracking-wider font-semibold">
-                    {t("status.response")}
-                  </span>
-                </div>
-                <div className={`text-sm font-medium ${config.textColor}`}>
-                  {config.responseTime}
-                </div>
-              </div>
-              <div className="p-3 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 transition-colors">
-                <div className="flex items-center gap-2 text-gray-400 mb-1">
-                  <Wifi className="w-3.5 h-3.5" />
-                  <span className="text-xs uppercase tracking-wider font-semibold">
-                    {t("status.connection")}
-                  </span>
-                </div>
-                <div className="text-sm text-white font-medium">{t("status.stable")}</div>
-              </div>
-            </div>
-
-            {/* System Architecture Info */}
-            <div className="mb-6 relative z-10 bg-white/5 rounded-xl p-4 border border-white/5">
-              <div className="flex items-center gap-2 mb-2">
-                <Zap className="w-3.5 h-3.5 text-yellow-500" />
-                <span className="text-xs uppercase tracking-wider font-semibold text-gray-300">
-                  {t("status.howItWorks")}
-                </span>
-              </div>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                {t("status.howItWorksDescription")}
-              </p>
-            </div>
-
-            {/* Footer */}
-            <div className="border-t border-white/5 pt-4 flex items-center justify-between text-xs text-gray-500 relative z-10">
-              <div className="flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-primary/60" />
-                <span>{t("status.verifiedPresence")}</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <Globe className="w-3.5 h-3.5" />
-                <span>{t("status.liveSync")}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <StatusModal
+        isOpen={showStatusModal}
+        onClose={handleCloseStatusModal}
+        status={status}
+        config={config}
+        time={time}
+        triggerRef={statusButtonRef as any}
+      />
     </>
   );
 }

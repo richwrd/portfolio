@@ -7,6 +7,8 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import Button from "../ui/Button";
 import { useLanguage } from "@/context/LanguageContext";
+import GlassSurface from "../effects/GlassSurface";
+import LaserFlow from "../effects/LaserFlow";
 
 const AnimatedLogo = dynamic(() => import("../effects/AnimatedLogo"), {
   loading: () => null,
@@ -382,11 +384,11 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex items-center pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-6 perspective-1000"
+      className="relative flex items-center min-h-screen pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-6 perspective-1000 overflow-visible"
       style={{ opacity: 0 }}
     >
       <div
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid lg:grid-cols-[80%_20%] gap-8 items-center"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid lg:grid-cols-[80%_20%] gap-8 items-center overflow-visible"
         style={{ perspective: "1200px" }}
       >
         <div
@@ -401,47 +403,61 @@ export default function Hero() {
             }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl 2xl:text-8xl font-black tracking-tight leading-[1.1] mb-6 md:mb-8 max-md:opacity-100! max-md:translate-y-0! max-md:transform-none!"
           >
-            <span
-              ref={span1Ref}
-              style={{
-                display: "inline-block",
-                transformStyle: isMobile ? "flat" : "preserve-3d",
-              }}
-            >
-              {t("hero.headline1")}
-            </span>
-            <br />
-            <span
-              ref={span2Ref}
-              style={{
-                display: "inline-block",
-                transformStyle: isMobile ? "flat" : "preserve-3d",
-              }}
-            >
-              {t("hero.headline2")}
-            </span>{" "}
-            <br />
-            <span
-              ref={span3Ref}
-              style={{
-                display: "inline-block",
-                transformStyle: isMobile ? "flat" : "preserve-3d",
-              }}
-            >
-              {t("hero.headline3")}
-            </span>{" "}
-            <span className="relative inline-block">
-              <span
-                ref={span4Ref}
-                style={{
-                  display: "inline-block",
-                  transformStyle: isMobile ? "flat" : "preserve-3d",
-                }}
-                className="gradient-animated-text relative z-10"
-              >
-                {t("hero.headline4")}
+            {t("hero.headline1") && (
+              <>
+                <span
+                  ref={span1Ref}
+                  style={{
+                    display: "inline-block",
+                    transformStyle: isMobile ? "flat" : "preserve-3d",
+                  }}
+                >
+                  {t("hero.headline1")}
+                </span>
+                <br />
+              </>
+            )}
+            {t("hero.headline2") && (
+              <>
+                <span
+                  ref={span2Ref}
+                  style={{
+                    display: "inline-block",
+                    transformStyle: isMobile ? "flat" : "preserve-3d",
+                  }}
+                >
+                  {t("hero.headline2")}
+                </span>{" "}
+                <br />
+              </>
+            )}
+            {t("hero.headline3") && (
+              <>
+                <span
+                  ref={span3Ref}
+                  style={{
+                    display: "inline-block",
+                    transformStyle: isMobile ? "flat" : "preserve-3d",
+                  }}
+                >
+                  {t("hero.headline3")}
+                </span>{" "}
+              </>
+            )}
+            {t("hero.headline4") && (
+              <span className="relative inline-block">
+                <span
+                  ref={span4Ref}
+                  style={{
+                    display: "inline-block",
+                    transformStyle: isMobile ? "flat" : "preserve-3d",
+                  }}
+                  className="gradient-animated-text relative z-10"
+                >
+                  {t("hero.headline4")}
+                </span>
               </span>
-            </span>
+            )}
           </h1>
 
           <p
@@ -458,17 +474,40 @@ export default function Hero() {
             ref={buttonsRef}
             className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-12 max-md:opacity-100! max-md:translate-y-0!"
           >
-            <Button
-              href="#contact"
-              variant="gradient"
-              size="lg"
-              rightIcon={<ArrowRight className="w-5 h-5" />}
+            {/* Start Project Button with Glass Effect */}
+            <GlassSurface
+              width="auto"
+              height="auto"
+              borderRadius={40}
+              className="relative group hover:scale-105 transition-transform duration-200"
             >
-              {t("hero.startProject")}
-            </Button>
-            <Button href="#process" variant="secondary" size="lg">
-              {t("hero.howIWork")}
-            </Button>
+              <div className="absolute inset-0 rounded-full gradient-animated opacity-20 group-hover:opacity-40 transition-opacity duration-300  pointer-events-none" />
+              <Button
+                href="#contact"
+                variant="ghost"
+                size="lg"
+                rightIcon={<ArrowRight className="w-5 h-5" />}
+                className="!rounded-full text-white font-black tracking-wide hover:bg-transparent relative z-10"
+              >
+                {t("hero.startProject")}
+              </Button>
+            </GlassSurface>
+
+            <GlassSurface
+              width="auto"
+              height="auto"
+              borderRadius={40}
+              className="relative group hover:scale-105 transition-transform duration-200"
+            >
+              <Button href="#process"
+                size="lg"
+                variant="ghost"
+                className="!rounded-full text-white font-black tracking-wide hover:bg-transparent relative z-10"
+              >
+                {t("hero.howIWork")}
+              </Button>
+            </GlassSurface>
+
           </div>
 
           <div
@@ -480,8 +519,8 @@ export default function Hero() {
               { value: t("hero.stats.projectsCompleted.value"), label: t("hero.stats.projectsCompleted.description") },
               { value: t("hero.stats.clientSatisfaction.value"), label: t("hero.stats.clientSatisfaction.description") },
             ].map((stat, i) => (
-              <div key={i} data-stat>
-                <div className="text-3xl sm:text-4xl md:text-5xl font-black mb-1 bg-linear-to-r from-white to-gray-400 bg-clip-text text-transparent">
+              <div key={i} data-stat >
+                <div className="text-2xl sm:text-3xl md:text-4xl font-black mb-1 bg-linear-to-r from-white to-gray-400 bg-clip-text text-transparent whitespace-nowrap">
                   {stat.value}
                 </div>
                 <div className="text-sm text-gray-400">{stat.label}</div>
@@ -490,15 +529,16 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="hidden lg:flex items-center justify-end relative z-0">
+        <div className="hidden lg:flex items-center justify-end relative">
           <div
             ref={orbRef}
-            className="w-full h-full flex items-center justify-end"
+            className="w-full h-full flex items-center justify-end relative"
           >
             <AnimatedLogo />
+
           </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 }
