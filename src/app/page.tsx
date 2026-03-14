@@ -1,11 +1,8 @@
 import dynamic from "next/dynamic";
 // import { getDevToPosts } from "@/lib/devto";
 import LoadingGate from "@/components/layout/LoadingGate";
-
-const NoiseOverlay = dynamic(() => import("@/components/effects/NoiseOverlay"), {
-  loading: () => null,
-});
-
+import RenderOnInteraction from "@/components/layout/RenderOnInteraction";
+import RenderOnView from "@/components/layout/RenderOnView";
 
 const Navbar = dynamic(() => import("@/components/layout/Navbar"), {
   loading: () => null,
@@ -20,10 +17,6 @@ const About = dynamic(() => import("@/components/sections/About"), {
 });
 
 const SkillsShowcase = dynamic(() => import("@/components/sections/SkillsShowcase"), {
-  loading: () => null,
-});
-
-const Process = dynamic(() => import("@/components/sections/Process"), {
   loading: () => null,
 });
 
@@ -57,14 +50,32 @@ export default async function Home() {
       {/* <NoiseOverlay /> */}
 
       <Navbar />
-      <SplashCursor />
-      <MusicPlayer />
+      <RenderOnInteraction events={["pointermove", "pointerdown", "touchstart"]}>
+        <SplashCursor />
+      </RenderOnInteraction>
+
+      <RenderOnInteraction>
+        <MusicPlayer />
+      </RenderOnInteraction>
 
       <main className="text-foreground selection:bg-primary/30 relative overflow-visible">
         <Hero />
-        <About />
-        <ReadyToStart />
-        <SkillsShowcase />
+
+        <RenderOnView anchorId="about" minHeightClassName="min-h-[90vh]">
+          <About />
+        </RenderOnView>
+
+        <RenderOnView minHeightClassName="min-h-[100vh]">
+          <ReadyToStart />
+        </RenderOnView>
+
+        <RenderOnView
+          anchorId="skills"
+          minHeightClassName="min-h-[800vh]"
+          rootMargin="500px 0px"
+        >
+          <SkillsShowcase />
+        </RenderOnView>
 
 
         {/* <Process /> */}
@@ -72,7 +83,9 @@ export default async function Home() {
         <DevToPosts posts={posts} />
         <Contact /> */}
 
-        <Footer />
+        <RenderOnView minHeightClassName="min-h-[280px]">
+          <Footer />
+        </RenderOnView>
 
       </main>
 

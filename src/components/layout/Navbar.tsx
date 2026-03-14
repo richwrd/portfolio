@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useBackground } from "@/context/BackgroundContext";
 import { useLanguage } from "@/context/LanguageContext";
 import AnimatedName from "../ui/AnimatedName";
+import AnchorScrollLink from "../ui/AnchorScrollLink";
 import Button from "../ui/Button";
 import Logo from "../ui/Logo";
 import GradualBlur from "../effects/GradualBlur";
@@ -35,6 +36,13 @@ function DevToIcon() {
 
 type StatusType = "online" | "offline" | "holidays";
 
+const NAV_SCROLL_DESKTOP_MS = 1000;
+const NAV_SCROLL_MOBILE_MS = 1100;
+const NAV_SCROLL_OFFSET_PX = 96;
+const NAV_SCROLL_WAIT_MS_DESKTOP = 1400;
+const NAV_SCROLL_WAIT_MS_MOBILE = 1600;
+const NAV_SCROLL_CLOSE_DELAY_MOBILE_MS = 320;
+
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -46,6 +54,7 @@ export default function Navbar() {
   const { t, language, setLanguage } = useLanguage();
 
   const navLinks = [
+    { name: t("nav.home"), href: "#home" },
     { name: t("nav.about"), href: "#about" },
     { name: t("nav.skills"), href: "#skills" },
     { name: t("nav.projects"), href: "#projects" },
@@ -325,9 +334,12 @@ export default function Navbar() {
           {/* Desktop Menu - Minimal & Modern */}
           <div ref={navLinksRef} className="hidden md:flex items-center gap-6 lg:gap-8">
             {navLinks.map((item) => (
-              <Link
+              <AnchorScrollLink
                 key={item.name}
                 href={item.href}
+                durationMs={NAV_SCROLL_DESKTOP_MS}
+                offsetPx={NAV_SCROLL_OFFSET_PX}
+                waitForTargetMs={NAV_SCROLL_WAIT_MS_DESKTOP}
                 className={`text-sm font-medium transition-colors relative group cursor-pointer ${isScrolled
                   ? "text-gray-300 hover:text-white"
                   : "text-white/90 hover:text-white"
@@ -335,7 +347,7 @@ export default function Navbar() {
               >
                 {item.name}
                 <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
-              </Link>
+              </AnchorScrollLink>
             ))}
 
             <div className="w-px h-6 bg-white/10 mx-2" />
@@ -414,8 +426,8 @@ export default function Navbar() {
                 width="auto"
                 height="auto"
                 borderRadius={9999}
-                blur={8}
-                brightness={40}
+                blur={6}
+                brightness={35}
                 opacity={0.9}
                 backgroundOpacity={0.05}
                 saturation={1.2}
@@ -423,7 +435,7 @@ export default function Navbar() {
               >
                 <button
                   onClick={() => setShowStatusModal(true)}
-                  className="flex items-center gap-1 px-2.5 py-1.5 cursor-pointer group text-[10px]"
+                  className="flex items-center gap-1 px-2 py-1 cursor-pointer group text-[9px]"
                 >
                   <span className="relative flex h-1.5 w-1.5">
                     <span
@@ -433,7 +445,7 @@ export default function Navbar() {
                       className={`relative inline-flex rounded-full h-1.5 w-1.5 ${config.color}`}
                     ></span>
                   </span>
-                  <span className="font-bold text-white leading-none tracking-wide">
+                  <span className="font-bold text-white leading-none tracking-[0.02em]">
                     {config.headline}
                   </span>
                 </button>
@@ -489,13 +501,17 @@ export default function Navbar() {
                 mobileMenuLinksRef.current[i] = el;
               }}
             >
-              <Link
+              <AnchorScrollLink
                 href={item.href}
+                durationMs={NAV_SCROLL_MOBILE_MS}
+                offsetPx={NAV_SCROLL_OFFSET_PX}
+                waitForTargetMs={NAV_SCROLL_WAIT_MS_MOBILE}
+                closeDelayMs={NAV_SCROLL_CLOSE_DELAY_MOBILE_MS}
+                onBeforeScroll={() => setMobileMenuOpen(false)}
                 className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 hover:to-primary transition-all cursor-pointer tracking-tight"
-                onClick={() => setMobileMenuOpen(false)}
               >
                 {item.name}
-              </Link>
+              </AnchorScrollLink>
             </div>
           ))}
 

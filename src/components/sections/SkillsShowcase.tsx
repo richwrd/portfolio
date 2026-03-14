@@ -194,7 +194,7 @@ function SkillCard({ skill, index, totalSkills, isMobile }: SkillCardProps) {
       ScrollTrigger.create({
         trigger: container,
         start: "top bottom",
-        end: "bottom-=300vh top",
+        end: isMobile ? "bottom-=100vh top" : "bottom-=300vh top",
         scrub: true,
         onUpdate: (self) => {
           const p = self.progress;
@@ -490,9 +490,10 @@ interface NavigationDotProps {
   index: number;
   totalSkills: number;
   containerRef: React.RefObject<HTMLElement | null>;
+  isMobile: boolean;
 }
 
-function NavigationDot({ skill, index, totalSkills, containerRef }: NavigationDotProps) {
+function NavigationDot({ skill, index, totalSkills, containerRef, isMobile }: NavigationDotProps) {
   const dotRef = useRef<HTMLDivElement>(null);
   const step = 1 / totalSkills;
   const rangeStart = index * step;
@@ -508,7 +509,7 @@ function NavigationDot({ skill, index, totalSkills, containerRef }: NavigationDo
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: "top bottom",
-        end: "bottom-=300vh top",
+        end: isMobile ? "bottom-=100vh top" : "bottom-=300vh top",
         scrub: true,
         onUpdate: (self) => {
           if (!dotRef.current) return;
@@ -569,11 +570,13 @@ function ScrollingBackgroundTextWrapper({
   children,
   className,
   style,
+  isMobile,
 }: {
   containerRef: React.RefObject<HTMLElement | null>;
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  isMobile?: boolean;
 }) {
   const [progress, setProgress] = useState(0);
 
@@ -583,7 +586,7 @@ function ScrollingBackgroundTextWrapper({
     const scrollTrigger = ScrollTrigger.create({
       trigger: containerRef.current,
       start: "top bottom",
-      end: "bottom-=300vh top",
+      end: isMobile ? "bottom-=100vh top" : "bottom-=300vh top",
       scrub: true,
       onUpdate: (self) => {
         setProgress(self.progress);
@@ -629,9 +632,9 @@ export default function SkillsShowcase() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative h-[800vh] w-full" id="skills">
+    <section ref={containerRef} className="relative h-[400vh] md:h-[800vh] w-full" id="skills">
       <div className="sticky overflow-hidden top-0 h-screen flex items-center justify-center">
-        <div className="absolute bottom-6 sm:bottom-12 left-4 sm:left-1/2 sm:-translate-x-1/2 z-50 flex items-center gap-3 sm:gap-4 bg-black/40 backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 rounded-full border border-white/10 overflow-x-auto max-w-[calc(100vw-2rem)] sm:max-w-fit no-scrollbar">
+        <div className="absolute bottom-6 sm:bottom-12 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 sm:gap-4 bg-black/40 backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 rounded-full border border-white/10 overflow-x-auto max-w-[calc(100vw-2rem)] sm:max-w-fit no-scrollbar">
           {skills.map((skill, index) => (
             <NavigationDot
               key={skill.id}
@@ -639,12 +642,14 @@ export default function SkillsShowcase() {
               index={index}
               totalSkills={skills.length}
               containerRef={containerRef}
+              isMobile={isMobile}
             />
           ))}
         </div>
 
         <ScrollingBackgroundTextWrapper
           containerRef={containerRef}
+          isMobile={isMobile}
           className="absolute bottom-0 h-full leading-[100vh] flex justify-center whitespace-nowrap text-[15vh] sm:text-[30vw] md:text-[40vw] font-black text-transparent stroke-text select-none pointer-events-none left-0 opacity-50 sm:opacity-100"
           style={{
             WebkitTextStroke: "2px rgba(255,255,255,0.08)",

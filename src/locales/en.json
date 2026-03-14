@@ -44,11 +44,11 @@
     "liveSync": "Live Sync"
   },
   "hero": {
-    "headline1": "From Code",
+    "headline1": "Database",
     "headline2": "to Infrastructure",
     "headline3": "",
-    "headline4": "Cloud-Native & Automation",
-    "description": "Software Engineer focused on backend and data. I transform technical complexity into efficient automation, designing scalable and resilient architectures.",
+    "headline4": "Zero Downtime.",
+    "description": "Specialist in PostgreSQL and cloud-native infrastructure. I design high-availability clusters, automate critical operations, and deliver resilient architectures for systems that cannot stop.",
     "startProject": "View Projects",
     "howIWork": "My Stack",
     "stats": {
@@ -61,7 +61,7 @@
         "value": "15+"
       },
       "clientSatisfaction": {
-        "description": "Main Focus",
+        "description": "Focus",
         "value": "Efficiency"
       }
     }
@@ -120,7 +120,7 @@
         "output1": "deployment.apps/api configured",
         "output2": "service/api-gateway unchanged",
         "output3": "configmap/env-config created",
-        "success": "🚀 Deployed to Production"
+        "success": "🚀 Production Deployment"
       }
     },
     "headline": {
@@ -130,46 +130,46 @@
       "highlight2": "the Business."
     },
     "story": {
-      "paragraph1": "I don't just write code; I build tools that give people their time back. I identify operational bottlenecks and create solutions that reduce tasks from months to hours.",
-      "paragraph2": "I move between development and infrastructure with a strong foundation in Python and PostgreSQL. My rule is clear: complexity must stay in the system, never in the user's hands.",
-      "paragraph3": "Since technology only scales through people, I also focus on human capital. I've mentored over 10 professionals, ensuring that technical knowledge is the true driver of team growth."
+      "paragraph1": "Without availability, the system doesn't exist. Without performance, no one uses it. Without reliability, growth stops. I deliver systems built to scale with resilience and control.",
+      "paragraph2": "Specialized in PostgreSQL and cloud-native infrastructure, I connect database, application, and environment efficiently — from high-availability clusters with Patroni to Python automation and API development with NestJS.",
+      "paragraph3": "Businesses scale through people. I've mentored more than 10 professionals, because spreading technical knowledge within the team is as strategic a multiplier as any software delivery."
     },
     "experiences": {
       "horus": {
         "year": "2025 - Present",
-        "title": "PostgreSQL DBA",
+        "title": "Mid-Level PostgreSQL DBA",
         "company": "Horus Solutions",
-        "description": "Management of PostgreSQL clusters, query optimization, automation of maintenance routines and implementation of high availability solutions using Patroni and Pgpool2."
+        "description": "Administration of PostgreSQL production environments, focused on high availability, performance tuning, and maintenance routine automation. Work in clusters with Patroni and Pgpool-II, including monitoring, failover, and continuous stability improvements."
       },
       "present": {
         "year": "2025 - Present",
-        "title": "Founder & Software Engineer",
+        "title": "Founder and Software Engineer",
         "company": "Richwrd Studio",
-        "description": "Focus on Cloud-Native infrastructure R&D, migration to Kubernetes and High Availability architectures."
+        "description": "Technical leadership in cloud-native infrastructure R&D, evolving architectures from Docker Compose to Kubernetes (K3s/Rancher). Development of solutions focused on resilience, observability, and high availability in PostgreSQL."
       },
       "idbrasil": {
-        "year": "2025 - 2025",
-        "title": "Infrastructure & Data Engineer",
+        "year": "2025",
+        "title": "Infrastructure and Data Engineer",
         "company": "ID Brasil Sistemas",
-        "description": "Data modeling for BI, infrastructure inventory automation, automated E2E testing and SQL performance optimization."
+        "description": "Development of infrastructure and data engineering automation with Python, PostgreSQL, and MySQL. Deliveries in BI modeling, E2E testing, and SQL optimization with significant performance gains in critical queries."
       },
       "tributech": {
         "year": "2022 - 2024",
-        "title": "Data Engineer & Technical Leadership",
+        "title": "Data Engineer and Technical Leadership",
         "company": "Tributech",
-        "description": "Responsible for data engineering (ETL/SQL), geoprocessing automation and onboarding of 10+ professionals."
+        "description": "Worked in data engineering and geoprocessing with PostgreSQL/PostGIS, ETL, and integration automation. Built SQL/PLpgSQL solutions at scale and provided technical leadership in onboarding and mentoring over 10 professionals."
       },
       "academic": {
         "year": "Academic",
         "title": "Researcher (Thesis)",
-        "company": "High Availability",
-        "description": "In-depth study of PostgreSQL clusters, Patroni, Pgpool2 and distributed consensus algorithms."
+        "company": "PostgreSQL High Availability",
+        "description": "Applied research in high-availability architectures with PostgreSQL, Patroni, etcd, and Pgpool-II, including failover analysis, distributed consensus, and resilience strategies."
       },
       "education": {
-        "year": "Education",
-        "title": "Software Engineering",
+        "year": "2021 - 2025",
+        "title": "Bachelor's Degree in Software Engineering",
         "company": "UniCesumar",
-        "description": "Solid foundation in architecture, methodologies, processes and software development."
+        "description": "Education with a solid foundation in software architecture, requirements engineering, quality, development processes, and scalable system-building practices."
       }
     }
   },
@@ -177,8 +177,9 @@
     "line1": "THINK.",
     "line2": "PLAN.",
     "line3": "EXECUTE.",
-    "description": "Three steps. Infinite possibilities. One single purpose.",
-    "description2": "Every step toward the extraordinary."
+    "description": "Three steps. Infinite possibilities.",
+    "description2": "One single purpose.",
+    "description3": "Every step toward the extraordinary."
   },
   "skills": {
     "startProject": "Start Project",
@@ -189,35 +190,35 @@
     },
     "data": {
       "title": "Data & HA",
-      "subtitle": "Data Engineering and Resilience",
-      "description": "Design and optimization of critical data architectures. Specialist in PostgreSQL, replication, complex ETL routines and ensuring high availability (HA) for operations that cannot stop.",
+      "subtitle": "Critical Data Engineering",
+      "description": "PostgreSQL architectures focused on performance, continuity, and high availability.",
       "details": {
-        "0": "PostgreSQL HA / Patroni / Pgpool2 / Pgbouncer",
-        "1": "PL/pgSQL, Modeling & SQL Optimization",
-        "2": "ETL Pipelines (Pentaho/Hop)",
-        "3": "PostGIS (Geoprocessing)"
+        "0": "PostgreSQL HA / Patroni / etcd / Pgpool-II / PgBouncer",
+        "1": "pg_partman and pgBackRest",
+        "2": "PL/pgSQL, data modeling, and SQL tuning",
+        "3": "ETL with Pentaho and Apache Hop"
       }
     },
     "backend": {
       "title": "BACKEND",
       "subtitle": "Systems Architecture",
-      "description": "Building robust and scalable server-side solutions that power your business logic. Secure APIs, efficient databases focusing on performance and maintainability.",
+      "description": "Robust and scalable APIs with clean code and a focus on maintainability.",
       "details": {
-        "0": "Python / Automation",
-        "1": "Node.js / NestJS",
+        "0": "Python and automation",
+        "1": "Node.js and NestJS",
         "2": "Microservices",
-        "3": "Automated Testing"
+        "3": "Automated testing"
       }
     },
     "devops": {
       "title": "DEVOPS",
-      "subtitle": "Cloud Infrastructure",
-      "description": "Automating the bridge between code and deployment. CI/CD pipelines, container orchestration and cloud infrastructure management ensuring your software runs smoothly everywhere.",
+      "subtitle": "Infrastructure and Delivery",
+      "description": "Reproducible infrastructure and continuous deployment for reliable environments.",
       "details": {
-        "0": "Docker / Kubernetes",
-        "1": "CI / CD Pipelines",
-        "2": "Configuration as Code",
-        "3": "Agile Methodology"
+        "0": "Docker and Kubernetes",
+        "1": "CI/CD",
+        "2": "Infrastructure as code",
+        "3": "Agile practices"
       }
     }
   },
@@ -231,10 +232,10 @@
     "promptEngineered": {
       "title": "How This Site Was Built",
       "subtitle": "Built with AI, guided by human vision",
-      "p1": "Here's the thing — this entire website was created 100% by AI, but don't worry, I was watching closely the whole time! Think of me as the director and the AI as the talented crew bringing the vision to life.",
-      "p2": "Every line of code, every design decision, and every animation you see here was crafted through careful prompt engineering. I guided the process, refined the outputs, and made sure everything aligned with my vision — but the heavy lifting? That was all AI.",
-      "p3": "This whole project was built using <highlight>vibe coding</highlight> — that flow state where you just go with the feeling, iterate on the fly, and let the creative process guide you. No rigid planning, just pure experimentation and refinement until it feels right.",
-      "p4": "It's pretty wild what's possible when you combine human creativity with AI capabilities. This site is a testament to that collaboration — showing that with the right prompts, a clear vision, and a good vibe, you can build something truly special.",
+      "p1": "Here's the thing — this entire website was created 100% by AI, but don't worry, I was following everything closely the whole time! Think of me as the director and AI as the talented crew bringing the vision to life.",
+      "p2": "Every line of code, every design decision, and every animation you see here was created through careful prompt engineering. I guided the process, refined the results, and ensured everything aligned with my vision — but the heavy lifting? That was all AI.",
+      "p3": "This entire project was built using <highlight>vibe coding</highlight> — that flow state where you go with the feeling, iterate in the moment, and let the creative process guide you. No rigid planning, just pure experimentation and refinement until it feels right.",
+      "p4": "It's pretty wild what becomes possible when you combine human creativity with AI capabilities. This site is proof of that collaboration — showing that with the right prompts, a clear vision, and a good vibe, you can build something truly special.",
       "badge": "100% AI-generated • 100% human-guided"
     }
   }

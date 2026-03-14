@@ -94,7 +94,16 @@ export default function SplashCursor({
       TRANSPARENT
     };
 
-    const { gl, ext } = getWebGLContext(canvas);
+    let context: ReturnType<typeof getWebGLContext> | null = null;
+    try {
+      context = getWebGLContext(canvas);
+    } catch {
+      return;
+    }
+
+    if (!context) return;
+
+    const { gl, ext } = context;
     if (!gl || !ext) return;
 
     if (!ext.supportLinearFiltering) {
@@ -119,7 +128,7 @@ export default function SplashCursor({
       }
 
       if (!gl) {
-        throw new Error('Unable to initialize WebGL.');
+        return null;
       }
 
       const isWebGL2 = 'drawBuffers' in gl;

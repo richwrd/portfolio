@@ -40,9 +40,11 @@ export default function ReadyToStart() {
   const orb2Ref = useRef<HTMLDivElement>(null);
   const glow1Ref = useRef<HTMLSpanElement>(null);
   const glow3Ref = useRef<HTMLSpanElement>(null);
+
   const [particles, setParticles] = useState<Particle[]>([]);
   const [smallParticles, setSmallParticles] = useState<SmallParticle[]>([]);
   const [isMobile, setIsMobile] = useState(false);
+
   const particleRefs = useRef<(HTMLDivElement | null)[]>([]);
   const smallParticleRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -71,6 +73,7 @@ export default function ReadyToStart() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
+
     checkMobile();
     window.addEventListener("resize", checkMobile, { passive: true });
     return () => window.removeEventListener("resize", checkMobile);
@@ -79,7 +82,10 @@ export default function ReadyToStart() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const newParticles = Array.from({ length: 15 }).map((_, i) => {
+    const particleCount = isMobile ? 8 : 15;
+    const smallParticleCount = isMobile ? 15 : 30;
+
+    const newParticles = Array.from({ length: particleCount }).map((_, i) => {
       const waypoints = 6;
       const pathX: number[] = [];
       const pathY: number[] = [];
@@ -94,13 +100,14 @@ export default function ReadyToStart() {
         pathX.push(centerX + Math.cos(angle) * distance - centerX);
         pathY.push(centerY + Math.sin(angle) * distance - centerY);
       }
+
       pathX.push(pathX[0]);
       pathY.push(pathY[0]);
 
       return {
         id: i,
-        initialX: centerX + (Math.random() - 0.5) * radius * 0.5,
-        initialY: centerY + (Math.random() - 0.5) * radius * 0.5,
+        initialX: (Math.random() - 0.5) * radius * 0.5,
+        initialY: (Math.random() - 0.5) * radius * 0.5,
         pathX,
         pathY,
         duration: Math.random() * 8 + 6,
@@ -110,11 +117,8 @@ export default function ReadyToStart() {
         ),
       };
     });
-    setTimeout(() => {
-      setParticles(newParticles);
-    }, 0);
 
-    const newSmallParticles = Array.from({ length: 30 }).map((_, i) => {
+    const newSmallParticles = Array.from({ length: smallParticleCount }).map((_, i) => {
       const width = window.innerWidth;
       const height = window.innerHeight;
       return {
@@ -136,10 +140,9 @@ export default function ReadyToStart() {
       };
     });
 
-    setTimeout(() => {
-      setSmallParticles(newSmallParticles);
-    }, 0);
-  }, []);
+    setParticles(newParticles);
+    setSmallParticles(newSmallParticles);
+  }, [isMobile]);
 
   useEffect(() => {
     if (!sectionRef.current || !containerRef.current) return;
@@ -157,18 +160,18 @@ export default function ReadyToStart() {
           const p = self.progress;
 
           if (containerRef.current) {
-            const rotateX = isMobile ? 0 : lerp(20, -20, p);
-            const rotateY = isMobile ? 0 : lerp(-15, 15, p);
+            const rotateX = isMobile ? lerp(10, -10, p) : lerp(20, -20, p);
+            const rotateY = isMobile ? lerp(-8, 8, p) : lerp(-15, 15, p);
             let scale = 1;
-            if (!isMobile) {
-              if (p <= 0.5) {
-                scale = lerp(0.9, 1.1, p / 0.5);
-              } else {
-                scale = lerp(1.1, 0.9, (p - 0.5) / 0.5);
-              }
+
+            if (p <= 0.5) {
+              scale = lerp(isMobile ? 0.95 : 0.9, isMobile ? 1.05 : 1.1, p / 0.5);
+            } else {
+              scale = lerp(isMobile ? 1.05 : 1.1, isMobile ? 0.95 : 0.9, (p - 0.5) / 0.5);
             }
-            const translateZ = isMobile ? 0 : lerp(-80, 80, p);
-            const y = isMobile ? 0 : lerp(40, -40, p);
+
+            const translateZ = isMobile ? lerp(-40, 40, p) : lerp(-80, 80, p);
+            const y = isMobile ? lerp(24, -24, p) : lerp(40, -40, p);
 
             gsap.set(containerRef.current, {
               rotateX,
@@ -182,35 +185,56 @@ export default function ReadyToStart() {
 
           if (word1Ref.current) {
             word1BaseValues.current = {
-              rotateX: isMobile ? 0 : lerp(25, -25, p),
-              rotateY: isMobile ? 0 : lerp(-10, 10, p),
-              translateZ: isMobile ? 0 : lerp(0, 100, p),
-              y: isMobile ? 0 : lerp(30, -30, p),
+              rotateX: isMobile ? lerp(12, -12, p) : lerp(25, -25, p),
+              rotateY: isMobile ? lerp(-5, 5, p) : lerp(-10, 10, p),
+              translateZ: isMobile ? lerp(0, 50, p) : lerp(0, 100, p),
+              y: isMobile ? lerp(16, -16, p) : lerp(30, -30, p),
             };
+
+            gsap.set(word1Ref.current, {
+              y: word1BaseValues.current.y,
+              rotateX: word1BaseValues.current.rotateX,
+              rotateY: word1BaseValues.current.rotateY,
+              translateZ: word1BaseValues.current.translateZ,
+            });
           }
 
           if (word2Ref.current) {
             word2BaseValues.current = {
-              rotateX: isMobile ? 0 : lerp(-15, 15, p),
-              rotateY: isMobile ? 0 : lerp(-20, 20, p),
-              translateZ: isMobile ? 0 : lerp(100, -100, p),
-              y: isMobile ? 0 : lerp(-20, 20, p),
+              rotateX: isMobile ? lerp(-8, 8, p) : lerp(-15, 15, p),
+              rotateY: isMobile ? lerp(-10, 10, p) : lerp(-20, 20, p),
+              translateZ: isMobile ? lerp(50, -50, p) : lerp(100, -100, p),
+              y: isMobile ? lerp(-12, 12, p) : lerp(-20, 20, p),
             };
+
+            gsap.set(word2Ref.current, {
+              y: word2BaseValues.current.y,
+              rotateX: word2BaseValues.current.rotateX,
+              rotateY: word2BaseValues.current.rotateY,
+              translateZ: word2BaseValues.current.translateZ,
+            });
           }
 
           if (word3Ref.current) {
             word3BaseValues.current = {
-              rotateX: isMobile ? 0 : lerp(-25, 25, p),
-              rotateY: isMobile ? 0 : lerp(10, -10, p),
-              translateZ: isMobile ? 0 : lerp(-100, 100, p),
-              y: isMobile ? 0 : lerp(20, -20, p),
+              rotateX: isMobile ? lerp(-12, 12, p) : lerp(-25, 25, p),
+              rotateY: isMobile ? lerp(5, -5, p) : lerp(10, -10, p),
+              translateZ: isMobile ? lerp(-50, 50, p) : lerp(-100, 100, p),
+              y: isMobile ? lerp(12, -12, p) : lerp(20, -20, p),
             };
+
+            gsap.set(word3Ref.current, {
+              y: word3BaseValues.current.y,
+              rotateX: word3BaseValues.current.rotateX,
+              rotateY: word3BaseValues.current.rotateY,
+              translateZ: word3BaseValues.current.translateZ,
+            });
           }
 
           if (subtitleRef.current) {
-            const rotateX = isMobile ? 0 : lerp(8, -8, p);
-            const translateZ = isMobile ? 0 : lerp(-30, 30, p);
-            const y = isMobile ? 0 : lerp(15, -15, p);
+            const rotateX = isMobile ? lerp(4, -4, p) : lerp(8, -8, p);
+            const translateZ = isMobile ? lerp(-15, 15, p) : lerp(-30, 30, p);
+            const y = isMobile ? lerp(10, -10, p) : lerp(15, -15, p);
 
             gsap.set(subtitleRef.current, {
               rotateX,
@@ -257,7 +281,7 @@ export default function ReadyToStart() {
     );
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     if (particles.length === 0) return;
@@ -313,7 +337,7 @@ export default function ReadyToStart() {
     );
 
     return () => ctx.revert();
-  }, [particles]);
+  }, [particles, isMobile]);
 
   useEffect(() => {
     if (smallParticles.length === 0) return;
@@ -362,11 +386,14 @@ export default function ReadyToStart() {
     );
 
     return () => ctx.revert();
-  }, [smallParticles]);
+  }, [smallParticles, isMobile]);
 
   useEffect(() => {
-    if (!word1Ref.current || !word2Ref.current || !word3Ref.current || isMobile)
+    if (!word1Ref.current || !word2Ref.current || !word3Ref.current) {
       return;
+    }
+
+    const floatScale = isMobile ? 0.5 : 1;
 
     const ctx = gsap.context(() => {
       const word1AnimObj = { rotateX: 0, rotateY: 0, translateZ: 0 };
@@ -376,8 +403,8 @@ export default function ReadyToStart() {
       gsap.to(word1AnimObj, {
         keyframes: [
           { rotateX: 0, rotateY: 0, translateZ: 0 },
-          { rotateX: 5, rotateY: -4, translateZ: 25 },
-          { rotateX: -5, rotateY: 4, translateZ: -25 },
+          { rotateX: 5 * floatScale, rotateY: -4 * floatScale, translateZ: 25 * floatScale },
+          { rotateX: -5 * floatScale, rotateY: 4 * floatScale, translateZ: -25 * floatScale },
           { rotateX: 0, rotateY: 0, translateZ: 0 },
         ],
         duration: 8,
@@ -388,8 +415,8 @@ export default function ReadyToStart() {
       gsap.to(word2AnimObj, {
         keyframes: [
           { rotateX: 0, rotateY: 0, translateZ: 0 },
-          { rotateX: -5, rotateY: 4, translateZ: -25 },
-          { rotateX: 5, rotateY: -4, translateZ: 25 },
+          { rotateX: -5 * floatScale, rotateY: 4 * floatScale, translateZ: -25 * floatScale },
+          { rotateX: 5 * floatScale, rotateY: -4 * floatScale, translateZ: 25 * floatScale },
           { rotateX: 0, rotateY: 0, translateZ: 0 },
         ],
         duration: 10,
@@ -401,8 +428,8 @@ export default function ReadyToStart() {
       gsap.to(word3AnimObj, {
         keyframes: [
           { rotateX: 0, rotateY: 0, translateZ: 0 },
-          { rotateX: 4, rotateY: -5, translateZ: 20 },
-          { rotateX: -4, rotateY: 5, translateZ: -20 },
+          { rotateX: 4 * floatScale, rotateY: -5 * floatScale, translateZ: 20 * floatScale },
+          { rotateX: -4 * floatScale, rotateY: 5 * floatScale, translateZ: -20 * floatScale },
           { rotateX: 0, rotateY: 0, translateZ: 0 },
         ],
         duration: 12,
@@ -454,40 +481,39 @@ export default function ReadyToStart() {
     >
       <div
         ref={orb1Ref}
-        className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[150px]"
+        className="absolute top-1/4 left-1/4 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-primary/20 rounded-full blur-[80px] sm:blur-[150px]"
       />
       <div
         ref={orb2Ref}
-        className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-secondary/20 rounded-full blur-[120px]"
+        className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] sm:w-[500px] sm:h-[500px] bg-secondary/20 rounded-full blur-[60px] sm:blur-[120px]"
       />
 
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {particles.map((p, i) => (
-          <div
-            key={p.id}
-            className="absolute top-1/2 left-1/2"
-            style={{
-              transform: `translate(${p.initialX - window.innerWidth / 2}px, ${p.initialY - window.innerHeight / 2
-                }px)`,
-            }}
-          >
             <div
-              ref={(el) => {
-                particleRefs.current[i] = el;
+              key={p.id}
+              className="absolute top-1/2 left-1/2"
+              style={{
+                transform: `translate(${p.initialX}px, ${p.initialY}px)`,
               }}
-              className="w-3 h-3 bg-primary/40 rounded-full mix-blend-screen blur-[1px]"
-            />
-          </div>
+            >
+              <div
+                ref={(el) => {
+                  particleRefs.current[i] = el;
+                }}
+                className="w-2 h-2 sm:w-3 sm:h-3 bg-primary/40 rounded-full mix-blend-screen blur-[1px]"
+              />
+            </div>
         ))}
 
         {smallParticles.map((p, i) => (
-          <div
-            key={`small-${p.id}`}
-            ref={(el) => {
-              smallParticleRefs.current[i] = el;
-            }}
-            className="absolute w-1 h-1 bg-primary/30 rounded-full"
-          />
+            <div
+              key={`small-${p.id}`}
+              ref={(el) => {
+                smallParticleRefs.current[i] = el;
+              }}
+              className="absolute w-1 h-1 bg-primary/30 rounded-full"
+            />
         ))}
       </div>
 
@@ -495,7 +521,7 @@ export default function ReadyToStart() {
         <div className="flex flex-col items-center justify-center min-h-[50vh] sm:min-h-[80vh]">
           <div
             ref={containerRef}
-            className="text-center transform-none md:transform"
+            className="text-center"
             style={{
               transformStyle: "preserve-3d",
             }}
@@ -503,18 +529,20 @@ export default function ReadyToStart() {
             <div className="mb-8 md:mb-12">
               <h2
                 ref={word1Ref}
-                className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[11rem] 2xl:text-[14rem] font-black leading-none mb-4 md:mb-6 transform-none md:transform relative"
+                className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[11rem] 2xl:text-[14rem] font-black leading-none mb-4 md:mb-6 relative"
                 style={{
                   transformStyle: "preserve-3d",
                 }}
               >
                 <span className="relative inline-block">
-                  <span className="relative z-10 gradient-animated-text">
+                  <span
+                    className="relative z-10 gradient-animated-text"
+                  >
                     {t("readyToStart.line1")}
                   </span>
                   <span
                     ref={glow1Ref}
-                    className="block absolute inset-0 gradient-animated-text blur-[20px] opacity-60 z-0"
+                    className="block absolute inset-0 gradient-animated-text blur-[10px] sm:blur-[20px] opacity-60 z-0"
                   >
                     {t("readyToStart.line1")}
                   </span>
@@ -523,7 +551,7 @@ export default function ReadyToStart() {
 
               <h2
                 ref={word2Ref}
-                className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[11rem] 2xl:text-[14rem] font-black leading-none mb-4 md:mb-6 transform-none md:transform relative"
+                className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[11rem] 2xl:text-[14rem] font-black leading-none mb-4 md:mb-6 relative"
                 style={{
                   transformStyle: "preserve-3d",
                 }}
@@ -533,18 +561,20 @@ export default function ReadyToStart() {
 
               <h2
                 ref={word3Ref}
-                className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[11rem] 2xl:text-[14rem] font-black leading-none transform-none md:transform relative"
+                className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[11rem] 2xl:text-[14rem] font-black leading-none relative"
                 style={{
                   transformStyle: "preserve-3d",
                 }}
               >
                 <span className="relative inline-block">
-                  <span className="relative z-10 gradient-animated-text">
+                  <span
+                    className="relative z-10 gradient-animated-text"
+                  >
                     {t("readyToStart.line3")}
                   </span>
                   <span
                     ref={glow3Ref}
-                    className="absolute inset-0 gradient-animated-text blur-[20px] opacity-60 z-0"
+                    className="absolute inset-0 gradient-animated-text blur-[10px] sm:blur-[20px] opacity-60 z-0"
                   >
                     {t("readyToStart.line3")}
                   </span>
@@ -554,14 +584,17 @@ export default function ReadyToStart() {
 
             <p
               ref={subtitleRef}
-              className="text-lg sm:text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto transform-none md:transform"
+              className="text-lg sm:text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto"
               style={{
                 transformStyle: "preserve-3d",
               }}
             >
               {t("readyToStart.description")}
-              <br />
+              <br className="md:hidden" />
+              <span className="hidden md:inline">{" "}</span>
               {t("readyToStart.description2")}
+              <br />
+              {t("readyToStart.description3")}
             </p>
           </div>
         </div>

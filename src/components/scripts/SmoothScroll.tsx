@@ -3,6 +3,12 @@
 import Lenis from 'lenis';
 import { ReactNode, useEffect, useRef } from 'react';
 
+declare global {
+  interface Window {
+    __lenis?: Lenis;
+  }
+}
+
 export default function SmoothScroll({ children }: { children: ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
   const rafIdRef = useRef<number | null>(null);
@@ -20,6 +26,7 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
     });
 
     lenisRef.current = lenis;
+    window.__lenis = lenis;
 
     function raf(time: number) {
       lenis.raf(time);
@@ -34,6 +41,7 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       }
       lenis.destroy();
       lenisRef.current = null;
+      delete window.__lenis;
     };
   }, []);
 
