@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Necessário para otimizar a imagem Docker (apenas os arquivos essenciais são copiados)
+  output: "standalone",
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,

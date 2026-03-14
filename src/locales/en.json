@@ -9,7 +9,7 @@
     "about": "About",
     "skills": "Skills",
     "projects": "Projects",
-    "letsTalk": "CONTACT",
+    "letsTalk": "Contact",
     "home": "Home"
   },
   "status": {
@@ -44,25 +44,25 @@
     "liveSync": "Live Sync"
   },
   "hero": {
-    "headline1": "Crafting efficient,",
-    "headline2": "scalable solutions",
-    "headline3": "in",
-    "headline4": "software & web.",
-    "description": "I'm Eduardo Richard — full-stack engineer, code artisan, digital problem solver. Turning complex problems into elegant, user-centric digital experiences.",
-    "startProject": "Start a Project",
-    "howIWork": "How I Work",
+    "headline1": "From Code",
+    "headline2": "to Infrastructure",
+    "headline3": "",
+    "headline4": "Cloud-Native & Automation",
+    "description": "Software Engineer focused on backend and data. I transform technical complexity into efficient automation, designing scalable and resilient architectures.",
+    "startProject": "View Projects",
+    "howIWork": "My Stack",
     "stats": {
       "yearsExperience": {
-        "description": "Years Experience",
+        "description": "Years of Experience",
         "value": "+4"
       },
       "projectsCompleted": {
-        "description": "Projects Completed",
-        "value": "15"
+        "description": "Delivered Solutions",
+        "value": "15+"
       },
       "clientSatisfaction": {
-        "description": "Client Satisfaction",
-        "value": "100%"
+        "description": "Main Focus",
+        "value": "Efficiency"
       }
     }
   },
@@ -79,22 +79,22 @@
         },
         "line2": {
           "key": "role",
-          "value": "Software & Data Engineer"
+          "value": "Fullstack Developer"
         },
         "line3": {
           "key": "stack"
         },
         "line4": {
-          "tech1": "Python",
+          "tech1": "Bash",
           "tech2": "PostgreSQL"
         },
         "line5": {
-          "tech1": "Kubernetes",
-          "tech2": "ETL/SQL"
+          "tech1": "TypeScript",
+          "tech2": "Python"
         },
         "line7": {
           "key": "passion",
-          "value": "Infinity"
+          "value": "Infinite"
         },
         "compiling": "Compiling..."
       },
@@ -103,7 +103,7 @@
         "status": "Online",
         "apiGateway": {
           "label": "API Gateway",
-          "value": "24ms"
+          "value": "16ms"
         },
         "database": {
           "label": "PostgreSQL",
@@ -111,7 +111,7 @@
         },
         "networkTraffic": {
           "label": "Network Traffic",
-          "value": "1.2 GB/s"
+          "value": "1.6 GB/s"
         }
       },
       "terminal": {
@@ -124,53 +124,106 @@
       }
     },
     "headline": {
-      "part1": "Tecnologia com",
-      "highlight1": "Propósito",
-      "part2": "focada em transformar",
-      "highlight2": "processos."
+      "part1": "It's not just about",
+      "highlight1": "Software,",
+      "part2": "it's about evolving",
+      "highlight2": "the Business."
     },
     "story": {
-      "paragraph1": "Não escrevo apenas código; construo ferramentas que devolvem tempo às pessoas. Minha trajetória é marcada por identificar ineficiências operacionais e criar soluções que reduzem tarefas de meses para horas.",
-      "paragraph2": "Com forte base técnica em Python, PostgreSQL e Infraestrutura, transito entre o desenvolvimento e a operação (DevOps). Acredito que a complexidade deve ficar no sistema, não na mão do usuário.",
-      "paragraph3": "Além da técnica, valorizo o capital humano. Tenho orgulho de ter mentanado mais de 10 desenvolvedores e liderado equipes, garantindo que o conhecimento seja compartilhado e que a tecnologia impulsione o crescimento do negócio."
+      "paragraph1": "I don't just write code; I build tools that give people their time back. I identify operational bottlenecks and create solutions that reduce tasks from months to hours.",
+      "paragraph2": "I move between development and infrastructure with a strong foundation in Python and PostgreSQL. My rule is clear: complexity must stay in the system, never in the user's hands.",
+      "paragraph3": "Since technology only scales through people, I also focus on human capital. I've mentored over 10 professionals, ensuring that technical knowledge is the true driver of team growth."
     },
     "experiences": {
+      "horus": {
+        "year": "2025 - Present",
+        "title": "PostgreSQL DBA",
+        "company": "Horus Solutions",
+        "description": "Management of PostgreSQL clusters, query optimization, automation of maintenance routines and implementation of high availability solutions using Patroni and Pgpool2."
+      },
       "present": {
-        "year": "2025 - Atual",
-        "title": "Fundador & Eng. de Software",
+        "year": "2025 - Present",
+        "title": "Founder & Software Engineer",
         "company": "Richwrd Studio",
-        "description": "Foco em P&D de infraestrutura Cloud-Native, migração para Kubernetes e arquiteturas de Alta Disponibilidade."
+        "description": "Focus on Cloud-Native infrastructure R&D, migration to Kubernetes and High Availability architectures."
       },
       "idbrasil": {
         "year": "2025 - 2025",
-        "title": "Eng. de Infraestrutura e Dados",
+        "title": "Infrastructure & Data Engineer",
         "company": "ID Brasil Sistemas",
-        "description": "Automação de inventário via API e otimização crítica de queries (redução de 2min para segundos)."
+        "description": "Data modeling for BI, infrastructure inventory automation, automated E2E testing and SQL performance optimization."
       },
       "tributech": {
         "year": "2022 - 2024",
-        "title": "Líder Técnico & Fullstack",
+        "title": "Data Engineer & Technical Leadership",
         "company": "Tributech",
-        "description": "Mentoria de equipe, integrações de ETL em escala e automação de geoprocessamento."
+        "description": "Responsible for data engineering (ETL/SQL), geoprocessing automation and onboarding of 10+ professionals."
       },
       "academic": {
-        "year": "Acadêmico",
-        "title": "Pesquisador (TCC)",
-        "company": "Alta Disponibilidade",
-        "description": "Estudo aprofundado em clusters PostgreSQL, Patroni e algoritmos de consenso distribuído."
+        "year": "Academic",
+        "title": "Researcher (Thesis)",
+        "company": "High Availability",
+        "description": "In-depth study of PostgreSQL clusters, Patroni, Pgpool2 and distributed consensus algorithms."
       },
       "education": {
-        "year": "Formação",
-        "title": "Engenharia de Software",
+        "year": "Education",
+        "title": "Software Engineering",
         "company": "UniCesumar",
-        "description": "Base sólida em arquitetura de software e desenvolvimento de sistemas."
+        "description": "Solid foundation in architecture, methodologies, processes and software development."
+      }
+    }
+  },
+  "readyToStart": {
+    "line1": "THINK.",
+    "line2": "PLAN.",
+    "line3": "EXECUTE.",
+    "description": "Three steps. Infinite possibilities. One single purpose.",
+    "description2": "Every step toward the extraordinary."
+  },
+  "skills": {
+    "startProject": "Start Project",
+    "scrollingText": {
+      "0": "PERFORMANCE",
+      "1": "SCALABILITY",
+      "2": "RESILIENCE"
+    },
+    "data": {
+      "title": "Data & HA",
+      "subtitle": "Data Engineering and Resilience",
+      "description": "Design and optimization of critical data architectures. Specialist in PostgreSQL, replication, complex ETL routines and ensuring high availability (HA) for operations that cannot stop.",
+      "details": {
+        "0": "PostgreSQL HA / Patroni / Pgpool2 / Pgbouncer",
+        "1": "PL/pgSQL, Modeling & SQL Optimization",
+        "2": "ETL Pipelines (Pentaho/Hop)",
+        "3": "PostGIS (Geoprocessing)"
+      }
+    },
+    "backend": {
+      "title": "BACKEND",
+      "subtitle": "Systems Architecture",
+      "description": "Building robust and scalable server-side solutions that power your business logic. Secure APIs, efficient databases focusing on performance and maintainability.",
+      "details": {
+        "0": "Python / Automation",
+        "1": "Node.js / NestJS",
+        "2": "Microservices",
+        "3": "Automated Testing"
+      }
+    },
+    "devops": {
+      "title": "DEVOPS",
+      "subtitle": "Cloud Infrastructure",
+      "description": "Automating the bridge between code and deployment. CI/CD pipelines, container orchestration and cloud infrastructure management ensuring your software runs smoothly everywhere.",
+      "details": {
+        "0": "Docker / Kubernetes",
+        "1": "CI / CD Pipelines",
+        "2": "Configuration as Code",
+        "3": "Agile Methodology"
       }
     }
   },
   "footer": {
     "copyright": "Eduardo Richard. All rights reserved.",
     "privacyPolicy": "Privacy Policy",
-    "termsOfService": "Terms of Service",
     "contact": "Contact",
     "tagline": "What can I do for you?",
     "explore": "Explore",

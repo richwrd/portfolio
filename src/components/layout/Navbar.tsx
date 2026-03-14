@@ -381,7 +381,7 @@ export default function Navbar() {
                     href="#contact"
                     variant="ghost"
                     size="sm"
-                    className="!rounded-full !px-3 !py-1.5 !text-[10px] text-white font-black tracking-wide hover:bg-transparent relative z-10"
+                    className="!rounded-full !px-3 !py-1.5 !text-[10px] text-white font-black tracking-wide hover:bg-transparent relative z-10 uppercase"
                   >
                     {t("nav.letsTalk")}
                   </Button>

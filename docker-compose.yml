@@ -1,0 +1,23 @@
+services:
+  portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_TURNSTILE_SITE_KEY
+        - NEXT_PUBLIC_SOCIAL_GITHUB
+        - NEXT_PUBLIC_SOCIAL_LINKEDIN
+        - NEXT_PUBLIC_SOCIAL_DEVTO
+    image: ${PORTFOLIO_IMAGE:-portfolio:latest}
+    container_name: portfolio
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    healthcheck:
+      test: [ "CMD", "wget", "-qO-", "http://localhost:3000/api/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

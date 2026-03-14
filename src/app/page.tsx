@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 // import { getDevToPosts } from "@/lib/devto";
+import LoadingGate from "@/components/layout/LoadingGate";
 
 const NoiseOverlay = dynamic(() => import("@/components/effects/NoiseOverlay"), {
   loading: () => null,
@@ -52,7 +53,7 @@ export default async function Home() {
   // const posts = await getDevToPosts();
 
   return (
-    <>
+    <LoadingGate>
       {/* <NoiseOverlay /> */}
 
       <Navbar />
@@ -75,7 +76,6 @@ export default async function Home() {
 
       </main>
 
-
-    </>
+    </LoadingGate>
   );
 }

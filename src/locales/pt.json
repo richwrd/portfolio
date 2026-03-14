@@ -9,7 +9,7 @@
     "about": "Sobre",
     "skills": "Skills",
     "projects": "Projetos",
-    "letsTalk": "CONTATO",
+    "letsTalk": "Contato",
     "home": "Início"
   },
   "status": {
@@ -135,43 +135,43 @@
       "paragraph3": "Como a tecnologia só escala através de pessoas, também foco no capital humano. Já mentorei mais de 10 profissionais, garantindo que o conhecimento técnico seja o verdadeiro motor de crescimento da equipe."
     },
     "experiences": {
-      "horus": {
-        "year": "2025 - Atual",
-        "title": "DBA PostgreSQL Pl",
-        "company": "Horus Solutions",
-        "description": "Gerenciamento de clusters PostgreSQL, otimização de consultas, automação de rotinas de manutenção e implementação de soluções de alta disponibilidade usando Patroni e Pgpool2."
-      },
-      "present": {
-        "year": "2025 - Atual",
-        "title": "Fundador & Eng. de Software",
-        "company": "Richwrd Studio",
-        "description": "Foco em P&D de infraestrutura Cloud-Native, migração para Kubernetes e arquiteturas de Alta Disponibilidade."
-      },
-      "idbrasil": {
-        "year": "2025 - 2025",
-        "title": "Eng. de Infraestrutura e Dados",
-        "company": "ID Brasil Sistemas",
-        "description": "Modelagem de dados para BI, automação de inventário de infraestrutura, testes automatizados E2E e otimização de performance SQL."
-      },
-      "tributech": {
-        "year": "2022 - 2024",
-        "title": "Eng. de Dados e Liderança Técnica",
-        "company": "Tributech",
-        "description": "Responsável pela engenharia de dados (ETL/SQL), automação de geoprocessamento e onboarding de +10 profissionais."
-      },
-      "academic": {
-        "year": "Acadêmico",
-        "title": "Pesquisador (TCC)",
-        "company": "Alta Disponibilidade",
-        "description": "Estudo aprofundado em clusters PostgreSQL, Patroni, Pgpool2 e algoritmos de consenso distribuído."
-      },
-      "education": {
-        "year": "Formação",
-        "title": "Engenharia de Software",
-        "company": "UniCesumar",
-        "description": "Base sólida em arquitetura, metodologias, processos e desenvolvimento de software."
-      }
-    }
+  "horus": {
+    "year": "2025 - Atual",
+    "title": "DBA PostgreSQL Pleno",
+    "company": "Horus Solutions",
+    "description": "Administração de ambientes PostgreSQL em produção, com foco em alta disponibilidade, tuning de performance e automação de rotinas de manutenção. Atuação em clusters com Patroni e Pgpool-II, incluindo monitoramento, failover e melhoria contínua de estabilidade."
+  },
+  "present": {
+    "year": "2025 - Atual",
+    "title": "Fundador e Engenheiro de Software",
+    "company": "Richwrd Studio",
+    "description": "Liderança técnica em P&D de infraestrutura cloud-native, evoluindo arquiteturas de Docker Compose para Kubernetes (K3s/Rancher). Desenvolvimento de soluções voltadas a resiliência, observabilidade e alta disponibilidade em PostgreSQL."
+  },
+  "idbrasil": {
+    "year": "2025",
+    "title": "Engenheiro de Infraestrutura e Dados",
+    "company": "ID Brasil Sistemas",
+    "description": "Desenvolvimento de automações em infraestrutura e engenharia de dados com Python, PostgreSQL e MySQL. Entregas em modelagem para BI, testes E2E e otimização SQL com ganhos expressivos de performance em consultas críticas."
+  },
+  "tributech": {
+    "year": "2022 - 2024",
+    "title": "Engenheiro de Dados e Liderança Técnica",
+    "company": "Tributech",
+    "description": "Atuação em engenharia de dados e geoprocessamento com PostgreSQL/PostGIS, ETL e automações de integração. Criação de soluções SQL/PLpgSQL em escala e liderança técnica no onboarding e mentoria de mais de 10 profissionais."
+  },
+  "academic": {
+    "year": "Acadêmico",
+    "title": "Pesquisador (TCC)",
+    "company": "PostgreSQL High Availability",
+    "description": "Pesquisa aplicada em arquiteturas de alta disponibilidade com PostgreSQL, Patroni, etcd e Pgpool-II, incluindo análise de failover, consenso distribuído e estratégias de resiliência."
+  },
+  "education": {
+    "year": "2021 - 2025",
+    "title": "Bacharelado em Engenharia de Software",
+    "company": "UniCesumar",
+    "description": "Formação com base sólida em arquitetura de software, engenharia de requisitos, qualidade, processos de desenvolvimento e práticas de construção de sistemas escaláveis."
+  }
+}
   },
   "readyToStart": {
     "line1": "PENSAR.",

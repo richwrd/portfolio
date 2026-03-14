@@ -1,5 +1,5 @@
 node_modules
-/scripts
+scripts
 
 
 .env
@@ -7,3 +7,5 @@ node_modules
 .env.production
 .env.development
 .next
+
+.github/workflows

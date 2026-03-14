@@ -176,7 +176,7 @@ export default function Footer() {
                   href="#about"
                   className="relative group hover:text-primary transition-colors cursor-pointer inline-block"
                 >
-                  {t("nav.myStory")}
+                  {t("nav.about")}
                   <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
                 </Link>
               </li>
@@ -185,7 +185,7 @@ export default function Footer() {
                   href="#process"
                   className="relative group hover:text-primary transition-colors cursor-pointer inline-block"
                 >
-                  {t("nav.howIWork")}
+                  {t("nav.skills")}
                   <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
                 </Link>
               </li>
@@ -194,7 +194,7 @@ export default function Footer() {
                   href="#services"
                   className="relative group hover:text-primary transition-colors cursor-pointer inline-block"
                 >
-                  {t("nav.expertise")}
+                  {t("nav.projects")}
                   <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
                 </Link>
               </li>
@@ -203,7 +203,7 @@ export default function Footer() {
                   href="#posts"
                   className="relative group hover:text-primary transition-colors cursor-pointer inline-block"
                 >
-                  {t("nav.posts")}
+                  {t("nav.letsTalk")}
                   <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
                 </Link>
               </li>

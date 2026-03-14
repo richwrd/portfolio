@@ -6,8 +6,6 @@ import ResourceHints from "@/components/scripts/ResourceHints";
 import SmoothScroll from "@/components/scripts/SmoothScroll";
 import { BackgroundProvider } from "@/context/BackgroundContext";
 import { LanguageProvider } from "@/context/LanguageContext";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -126,8 +124,6 @@ export default function RootLayout({
             <GoogleAnalytics />
             <SmoothScroll>
               {children}
-              <SpeedInsights />
-              <Analytics />
             </SmoothScroll>
           </LanguageProvider>
         </BackgroundProvider>
