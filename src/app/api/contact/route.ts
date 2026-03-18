@@ -1,136 +1,100 @@
-import axios from 'axios';
 import { NextResponse } from 'next/server';
-import { SendMailClient } from "zeptomail";
+import { headers } from 'next/headers';
+import { isDevelopment } from '@/lib/contact/config';
+import { verifyTurnstile, TurnstileError } from '@/lib/contact/turnstile';
+import { sendContactEmail, hasZeptoCredentials, ContactPayload } from '@/lib/contact/mailer';
+import { simulatedSuccessOrNull } from '@/lib/contact/simulation';
+import { recordContact, checkRecentActivity } from '@/lib/contact/db';
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const { name, email, message, token } = body;
+    const { name, email, message, token } = (await request.json()) as ContactPayload & {
+      token?: string;
+    };
 
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    const isLocalhostToken = token === 'localhost-token';
+    const headerList = await headers();
+    const forwarded = headerList.get('x-forwarded-for');
+    const ip = forwarded ? forwarded.split(',')[0].trim() : (headerList.get('x-real-ip') || 'unknown');
+    const userAgent = headerList.get('user-agent') || 'unknown';
 
-    if (isDevelopment) {
-      console.log('Contact API Request:', {
-        name,
-        email,
-        isLocalhostToken,
-        tokenReceived: token ? '(present)' : '(missing)',
-        isDev: isDevelopment,
-      });
-    }
-
-    if (!token) {
-      return NextResponse.json({ error: 'Captcha token missing' }, { status: 400 });
-    }
-
-    // Skip verification in development if the token is the placeholder 'localhost-token'
-    if (!(isDevelopment && isLocalhostToken)) {
-      // Verify Turnstile Token
-      const verifyUrl = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
-      try {
-        const result = await axios.post(verifyUrl, {
-          secret: process.env.TURNSTILE_SECRET_KEY,
-          response: token,
-        });
-
-        if (!result.data.success) {
-          console.error('Turnstile verification failed:', result.data);
-          return NextResponse.json({ error: 'Captcha validation failed' }, { status: 400 });
-        }
-      } catch (err: unknown) {
-        console.error('Turnstile verification error:', err);
-        if (!isDevelopment) {
-          return NextResponse.json({ error: 'Captcha service error' }, { status: 400 });
-        }
+    // 0. Database Check (Rate Limit)
+    if (process.env.DATABASE_URL) {
+      const isRateLimited = await checkRecentActivity(email, ip);
+      if (isRateLimited) {
+        return NextResponse.json(
+          { 
+            error: 'Muitas mensagens enviadas. Por favor, tente novamente em 1 hora.',
+            code: 'RATE_LIMIT_EXCEEDED'
+          },
+          { status: 429 }
+        );
       }
     }
 
-    // Send Email via ZeptoMail
-    const zeptoUrl = process.env.ZEPTOMAIL_URL;
-    const zeptoToken = process.env.ZEPTOMAIL_TOKEN;
-    const fromAddress = process.env.ZEPTOMAIL_FROM_ADDRESS || 'noreply@eduardorichard.com';
-    const fromName = process.env.ZEPTOMAIL_FROM_NAME || 'Portfolio';
-    const toAddress = process.env.ZEPTOMAIL_TO_ADDRESS || 'founder@eduardorichard.com';
-    const toName = process.env.ZEPTOMAIL_TO_NAME || 'Eduardo Richard';
+    // 1. Captcha
+    await verifyTurnstile(token ?? '');
 
-    if (zeptoUrl && zeptoToken) {
-      const client = new SendMailClient({
-        url: zeptoUrl,
-        token: zeptoToken
-      });
-
+    // 2. Record in DB as fallback
+    if (process.env.DATABASE_URL) {
       try {
-        await client.sendMail({
-          "from": {
-            "address": fromAddress,
-            "name": fromName
-          },
-          "to": [
-            {
-              "email_address": {
-                "address": toAddress,
-                "name": toName
-              }
-            }
-          ],
-          "subject": `Portfolio Contact: ${name}`,
-          "htmlbody": `
-            <h3>New Contact Message</h3>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-            <p><strong>Message:</strong></p>
-            <p>${message.replace(/\n/g, '<br>')}</p>
-          `,
+        await recordContact({ 
+          name, 
+          email, 
+          message, 
+          ip_address: ip, 
+          user_agent: userAgent 
         });
+      } catch (dbError) {
+        console.error('Failed to log contact to database:', dbError);
+        // We continue anyway so we can try to send the email
+      }
+    }
 
-        if (isDevelopment) {
-          console.log('Email sent successfully via ZeptoMail');
-        }
+    // 3. Send e-mail
+    if (hasZeptoCredentials()) {
+      try {
+        await sendContactEmail({ name, email, message });
       } catch (mailError: any) {
-        // Detailed logging for debugging
         console.error('ZeptoMail Error:', JSON.stringify(mailError, null, 2));
-        
-        const shouldSimulate = process.env.ZEPTOMAIL_SIMULATE_SUCCESS === 'true';
 
-        // Simulation toggle for UI testing
-        if (shouldSimulate) {
-          console.warn('⚠️ SIMULATION MODE: ZeptoMail failed but returning success to frontend.');
-          return NextResponse.json({ 
-            success: true, 
-            message: 'Simulated success (Simulation Active)',
-            devError: mailError.message || mailError.error?.message 
-          });
-        }
+        const simulated = simulatedSuccessOrNull({
+          reason: 'ZeptoMail failed',
+          devError: mailError?.message ?? mailError?.error?.message,
+        });
+        if (simulated) return simulated;
 
         return NextResponse.json(
-          { 
+          {
             error: 'Failed to send email via ZeptoMail',
-            details: isDevelopment ? (mailError.message || mailError.error?.message) : undefined 
+            details: isDevelopment
+              ? (mailError?.message ?? mailError?.error?.message)
+              : undefined,
           },
-          { status: 500 }
+          { status: 500 },
         );
       }
     } else {
-      const shouldSimulate = process.env.ZEPTOMAIL_SIMULATE_SUCCESS === 'true';
-      if (shouldSimulate) {
-        console.log('Skipping real send (missing credentials). Returning simulated success.');
-        return NextResponse.json({ success: true, message: 'Simulated success (no credentials)' });
-      }
+      const simulated = simulatedSuccessOrNull({ reason: 'no credentials' });
+      if (simulated) return simulated;
+
       console.log('Email sending skipped (no credentials). Data:', { name, email, message });
     }
 
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
+    if (error instanceof TurnstileError) {
+      return NextResponse.json({ error: error.message }, { status: error.statusCode });
+    }
+
     console.error('Contact error:', error);
-    const err = error as { code?: string; message?: string };
+    const err = error as { message?: string };
 
     return NextResponse.json(
       {
         error: 'Failed to process request. Please try again later.',
-        details: process.env.NODE_ENV === 'development' ? err.message : undefined
+        details: isDevelopment ? err.message : undefined,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

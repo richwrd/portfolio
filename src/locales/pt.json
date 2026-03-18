@@ -261,7 +261,10 @@
     "success": {
       "title": "Mensagem Enviada!",
       "description": "Retornarei assim que possível.",
-      "sendAnother": "Enviar outra mensagem"
+      "sendAnother": "Enviar outra mensagem",
+      "sentBadge": "Enviado",
+      "viewMessage": "Ver Mensagem Enviada",
+      "hideMessage": "Ocultar Mensagem"
     },
     "error": "Algo deu errado. Por favor, tente novamente."
   },

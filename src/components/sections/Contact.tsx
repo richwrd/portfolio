@@ -3,7 +3,7 @@
 import axios from "axios";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { AlertCircle, CheckCircle2, Send } from "lucide-react";
+import { AlertCircle, CheckCircle2, Send, Eye, EyeOff } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -55,10 +55,52 @@ export default function Contact() {
   const [isMobile, setIsMobile] = useState(false);
   const [shouldLoadTurnstile, setShouldLoadTurnstile] = useState(false);
   const [isLocalhost, setIsLocalhost] = useState(false);
+  const [showSentMessage, setShowSentMessage] = useState(false);
+  const [lastMessage, setLastMessage] = useState<string | null>(null);
+  const [lastName, setLastName] = useState<string | null>(null);
+  const [lastEmail, setLastEmail] = useState<string | null>(null);
 
   useEffect(() => {
-    setIsLocalhost(window.location.hostname === "localhost");
-  }, []);
+    const isLocal =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1";
+    setIsLocalhost(isLocal);
+
+    // Get cookies or localStorage for pre-filling
+    const getCookie = (name: string) => {
+      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? decodeURIComponent(match[2]) : null;
+    };
+
+    const savedName = getCookie("contact_name") || localStorage.getItem("contact_name");
+    const savedEmail = getCookie("contact_email") || localStorage.getItem("contact_email");
+    const savedMessage = getCookie("contact_message") || localStorage.getItem("contact_message");
+
+    if (savedName) setLastName(savedName);
+    if (savedEmail) setLastEmail(savedEmail);
+
+    if (savedName || savedEmail) {
+      reset({
+        name: savedName || "",
+        email: savedEmail || "",
+      });
+    }
+
+    if (savedMessage) {
+      setLastMessage(savedMessage);
+    }
+
+    // Check if should show success state automatically
+    const lastSendString = getCookie("contact_last_send") || localStorage.getItem("contact_last_send");
+    if (lastSendString && savedMessage) {
+      const lastSend = new Date(lastSendString);
+      const now = new Date();
+      // If sent in the last 24 hours, show success state
+      if (now.getTime() - lastSend.getTime() < 24 * 60 * 60 * 1000) {
+        setStatus("success");
+      }
+    }
+  }, [reset]);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
@@ -496,11 +538,42 @@ export default function Contact() {
         ...data,
         token: turnstileToken || (isLocalhost ? "localhost-token" : ""),
       });
+      
+      // Save name and email in cookies (expires in 30 days)
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 30);
+      const cookieOptions = `; expires=${expirationDate.toUTCString()}; path=/; SameSite=Lax`;
+      
+      document.cookie = `contact_name=${encodeURIComponent(data.name)}${cookieOptions}`;
+      document.cookie = `contact_email=${encodeURIComponent(data.email)}${cookieOptions}`;
+      document.cookie = `contact_message=${encodeURIComponent(data.message)}${cookieOptions}`;
+      document.cookie = `contact_last_send=${new Date().toISOString()}${cookieOptions}`;
+      
+      // Also save to localStorage as a fallback if cookies are cleared
+      localStorage.setItem("contact_name", data.name);
+      localStorage.setItem("contact_email", data.email);
+      localStorage.setItem("contact_message", data.message);
+      localStorage.setItem("contact_last_send", new Date().toISOString());
+      
+      setLastMessage(data.message);
+      setLastName(data.name);
+      setLastEmail(data.email);
       setStatus("success");
-      reset();
-    } catch (error) {
+      // We don't reset name/email here to keep them for the next send if they reload
+      reset({
+        name: data.name,
+        email: data.email,
+        message: "",
+        privacy: false
+      });
+    } catch (error: any) {
       console.error(error);
-      setStatus("error");
+      // If rate limited, show success state with previous message info
+      if (error.response?.status === 429) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
     }
   };
 
@@ -635,35 +708,73 @@ export default function Contact() {
 
             <div className="relative z-10">
               {status === "success" ? (
-                <div ref={successDivRef} className="text-center py-12">
-                  <div ref={successIconRef}>
-                    <CheckCircle2 className="w-20 h-20 text-green-500 mx-auto mb-6" />
+                  <div ref={successDivRef} className="text-center py-12 md:py-20 flex flex-col items-center justify-center min-h-[400px]">
+                    <div ref={successIconRef} className="relative mb-8">
+                      <div className="absolute inset-0 bg-green-500/20 blur-3xl rounded-full scale-150" />
+                      <CheckCircle2 className="w-20 h-20 md:w-24 md:h-24 text-green-500 relative z-10" />
+                    </div>
+                    <h3 className="text-3xl md:text-4xl font-black mb-4 bg-linear-to-r from-green-400 via-emerald-500 to-teal-500 bg-clip-text text-transparent">
+                      {t("contact.success.title")}
+                    </h3>
+                    <p className="text-gray-400 text-base md:text-lg mb-10 max-w-sm mx-auto leading-relaxed">
+                      {t("contact.success.description")}
+                    </p>
+                    
+                    <div className="flex flex-col items-center gap-6 w-full">
+                      {lastMessage && (
+                        <div className="flex flex-col items-center gap-6 w-full max-w-md">
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => setShowSentMessage(!showSentMessage)}
+                            leftIcon={showSentMessage ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                            className="px-6 border-white/10 hover:border-white/20 bg-white/5 backdrop-blur-sm"
+                          >
+                            {showSentMessage 
+                              ? t("contact.success.hideMessage")
+                              : t("contact.success.viewMessage")}
+                          </Button>
+
+                          {showSentMessage && (
+                            <div className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-left animate-in fade-in zoom-in-95 slide-in-from-top-2 duration-300 backdrop-blur-sm relative">
+                              {/* Sent Badge inside the card */}
+                              <div className="absolute top-6 right-6 flex items-center gap-1.5 px-3 py-1 bg-green-500/10 border border-green-500/30 rounded-full text-green-400 font-bold text-[10px] tracking-wider uppercase backdrop-blur-md">
+                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                                {t("contact.success.sentBadge")}
+                              </div>
+
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 border-b border-white/10 pb-4 pr-20">
+                                <div>
+                                  <div className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1 opacity-70">
+                                    {t("contact.form.nameLabel")}
+                                  </div>
+                                  <div className="text-gray-300 text-sm font-medium truncate">
+                                    {lastName}
+                                  </div>
+                                </div>
+                                <div>
+                                  <div className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1 opacity-70">
+                                    {t("contact.form.emailLabel")}
+                                  </div>
+                                  <div className="text-gray-300 text-sm font-medium truncate">
+                                    {lastEmail}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="text-[10px] font-bold text-primary uppercase tracking-widest mb-2 opacity-70 flex items-center gap-2">
+                                {t("contact.form.messageLabel")}
+                              </div>
+                              <div className="text-gray-300 text-sm italic leading-relaxed whitespace-pre-wrap border-l-2 border-primary/30 pl-4 py-1">
+                                "{lastMessage}"
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <h3 className="text-3xl font-black mb-3 bg-linear-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                    {t("contact.success.title")}
-                  </h3>
-                  <p className="text-gray-400 mb-6">
-                    {t("contact.success.description")}
-                  </p>
-                  <button
-                    onClick={handleSendAnother}
-                    onMouseEnter={(e) =>
-                      gsap.to(e.currentTarget, { scale: 1.05, duration: 0.2 })
-                    }
-                    onMouseLeave={(e) =>
-                      gsap.to(e.currentTarget, { scale: 1, duration: 0.2 })
-                    }
-                    onMouseDown={(e) =>
-                      gsap.to(e.currentTarget, { scale: 0.95, duration: 0.1 })
-                    }
-                    onMouseUp={(e) =>
-                      gsap.to(e.currentTarget, { scale: 1.05, duration: 0.1 })
-                    }
-                    className="px-6 py-3 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-full text-primary font-medium transition-all cursor-pointer"
-                  >
-                    {t("contact.success.sendAnother")}
-                  </button>
-                </div>
               ) : (
                 <form
                   onSubmit={handleSubmit(onSubmit)}

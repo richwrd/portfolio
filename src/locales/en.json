@@ -250,7 +250,10 @@
     "success": {
       "title": "Message Sent!",
       "description": "I'll get back to you as soon as possible.",
-      "sendAnother": "Send another message"
+      "sendAnother": "Send another message",
+      "sentBadge": "Sent",
+      "viewMessage": "View Sent Message",
+      "hideMessage": "Hide Message"
     },
     "error": "Something went wrong. Please try again."
   },
