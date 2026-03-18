@@ -8,6 +8,8 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
+import { useBackground } from "@/context/BackgroundContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,6 +25,8 @@ type FormData = {
 };
 
 export default function Contact() {
+  const { currentTheme } = useBackground();
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const h2Ref = useRef<HTMLHeadingElement>(null);
   const glowSpanRef = useRef<HTMLSpanElement>(null);
@@ -50,6 +54,11 @@ export default function Contact() {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [shouldLoadTurnstile, setShouldLoadTurnstile] = useState(false);
+  const [isLocalhost, setIsLocalhost] = useState(false);
+
+  useEffect(() => {
+    setIsLocalhost(window.location.hostname === "localhost");
+  }, []);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
@@ -477,15 +486,15 @@ export default function Contact() {
   }, [status]);
 
   const onSubmit = async (data: FormData) => {
-    if (!turnstileToken) {
-      alert("Please complete the captcha");
+    if (!turnstileToken && !isLocalhost) {
+      alert(t("contact.form.captchaAlert"));
       return;
     }
 
     try {
       await axios.post("/api/contact", {
         ...data,
-        token: turnstileToken,
+        token: turnstileToken || (isLocalhost ? "localhost-token" : ""),
       });
       setStatus("success");
       reset();
@@ -514,18 +523,17 @@ export default function Contact() {
                 transformStyle: isMobile ? "flat" : "preserve-3d",
                 perspective: isMobile ? "none" : "1500px",
               }}
-              className="text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-12 md:mb-16 lg:mb-24 px-4 sm:px-4 mx-auto max-w-full sm:max-w-[90vw] wrap-break-word"
+              className="flex flex-col items-center text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-12 md:mb-16 lg:mb-24 px-4 sm:px-4 mx-auto max-w-full sm:max-w-[90vw]"
             >
               <span
                 style={{
                   display: "inline-block",
                   transformStyle: isMobile ? "flat" : "preserve-3d",
                 }}
-                className="px-2"
+                className="px-2 whitespace-nowrap"
               >
-                Let&apos;s build something
+                {t("contact.headline1")}
               </span>
-              <br />
               <span className="relative inline-block">
                 <span
                   style={{
@@ -533,7 +541,7 @@ export default function Contact() {
                   }}
                   className="gradient-animated-text"
                 >
-                  amazing together.
+                  {t("contact.headline2")}
                 </span>
                 <span
                   ref={glowSpanRef}
@@ -551,8 +559,7 @@ export default function Contact() {
               }}
               className="text-center text-base sm:text-lg md:text-xl lg:text-2xl text-gray-400 max-w-2xl mx-auto mb-8 md:mb-12 leading-relaxed px-6 sm:px-4"
             >
-              Ready to transform your digital presence? I&apos;m currently
-              available for new projects and collaborations.
+              {t("contact.description")}
             </p>
 
             <div
@@ -574,7 +581,7 @@ export default function Contact() {
                   className="w-2 h-2 bg-green-500 rounded-full"
                 />
                 <span className="text-sm md:text-base font-medium">
-                  Available for freelance work
+                  {t("contact.badge1")}
                 </span>
               </div>
               <div
@@ -589,7 +596,7 @@ export default function Contact() {
                   className="w-2 h-2 bg-primary rounded-full"
                 />
                 <span className="text-sm md:text-base font-medium">
-                  Response time: &lt; 24 hours
+                  {t("contact.badge2")}
                 </span>
               </div>
             </div>
@@ -633,10 +640,10 @@ export default function Contact() {
                     <CheckCircle2 className="w-20 h-20 text-green-500 mx-auto mb-6" />
                   </div>
                   <h3 className="text-3xl font-black mb-3 bg-linear-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                    Message Sent!
+                    {t("contact.success.title")}
                   </h3>
                   <p className="text-gray-400 mb-6">
-                    I&apos;ll get back to you as soon as possible.
+                    {t("contact.success.description")}
                   </p>
                   <button
                     onClick={handleSendAnother}
@@ -654,7 +661,7 @@ export default function Contact() {
                     }
                     className="px-6 py-3 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-full text-primary font-medium transition-all cursor-pointer"
                   >
-                    Send another message
+                    {t("contact.success.sendAnother")}
                   </button>
                 </div>
               ) : (
@@ -667,13 +674,13 @@ export default function Contact() {
                       htmlFor="name"
                       className="block text-sm font-semibold mb-2 sm:mb-3 text-gray-300"
                     >
-                      Name
+                      {t("contact.form.nameLabel")}
                     </label>
                     <input
                       id="name"
-                      {...register("name", { required: "Name is required" })}
+                      {...register("name", { required: t("contact.form.nameRequired") })}
                       className="w-full bg-black/30 border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/50 transition-all duration-300 text-white placeholder-gray-500 hover:border-white/20"
-                      placeholder="John Doe"
+                      placeholder={t("contact.form.namePlaceholder")}
                     />
                     {errors.name && (
                       <p className="text-red-400 text-xs mt-2 flex items-center gap-1">
@@ -687,20 +694,20 @@ export default function Contact() {
                       htmlFor="email"
                       className="block text-sm font-semibold mb-2 sm:mb-3 text-gray-300"
                     >
-                      Email
+                      {t("contact.form.emailLabel")}
                     </label>
                     <input
                       id="email"
                       type="email"
                       {...register("email", {
-                        required: "Email is required",
+                        required: t("contact.form.emailRequired"),
                         pattern: {
                           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: "Invalid email address",
+                          message: t("contact.form.emailInvalid"),
                         },
                       })}
                       className="w-full bg-black/30 border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/50 transition-all duration-300 text-white placeholder-gray-500 hover:border-white/20"
-                      placeholder="john@example.com"
+                      placeholder={t("contact.form.emailPlaceholder")}
                     />
                     {errors.email && (
                       <p className="text-red-400 text-xs mt-2 flex items-center gap-1">
@@ -714,16 +721,16 @@ export default function Contact() {
                       htmlFor="message"
                       className="block text-sm font-semibold mb-2 sm:mb-3 text-gray-300"
                     >
-                      Message
+                      {t("contact.form.messageLabel")}
                     </label>
                     <textarea
                       id="message"
                       rows={5}
                       {...register("message", {
-                        required: "Message is required",
+                        required: t("contact.form.messageRequired"),
                       })}
                       className="w-full bg-black/30 border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/50 transition-all duration-300 resize-none text-white placeholder-gray-500 hover:border-white/20"
-                      placeholder="Tell me about your project..."
+                      placeholder={t("contact.form.messagePlaceholder")}
                     />
                     {errors.message && (
                       <p className="text-red-400 text-xs mt-2 flex items-center gap-1">
@@ -738,14 +745,14 @@ export default function Contact() {
                         id="privacy"
                         type="checkbox"
                         {...register("privacy", {
-                          required: "You must agree to the privacy policy",
+                          required: t("contact.form.privacyRequired"),
                         })}
                         className="w-4 h-4 rounded border-white/10 text-primary focus:ring-primary bg-black/20"
                       />
                     </div>
                     <div className="text-sm">
                       <label htmlFor="privacy" className="text-gray-400">
-                        I agree to the{" "}
+                        {t("contact.form.privacyAgree")}{" "}
                         <a
                           href={`https://www.iubenda.com/privacy-policy/${process.env.NEXT_PUBLIC_IUBENDA_POLICY_ID || ""
                             }`}
@@ -753,9 +760,9 @@ export default function Contact() {
                           rel="noopener noreferrer"
                           className="text-primary hover:underline cursor-pointer"
                         >
-                          Privacy Policy
+                          {t("contact.form.privacyPolicy")}
                         </a>{" "}
-                        and consent to the processing of my data.
+                        {t("contact.form.privacyConsent")}
                       </label>
                       {errors.privacy && (
                         <p className="text-red-400 text-xs mt-1">
@@ -765,7 +772,7 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  {shouldLoadTurnstile && (
+                  {shouldLoadTurnstile && !isLocalhost && (
                     <div className="w-full overflow-hidden">
                       <Turnstile
                         sitekey={
@@ -789,13 +796,13 @@ export default function Contact() {
                       <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     }
                   >
-                    {isSubmitting ? "Sending..." : "Send Message"}
+                    {isSubmitting ? t("contact.form.sending") : t("contact.form.sendMessage")}
                   </Button>
 
                   {status === "error" && (
                     <div className="flex items-center gap-2 text-red-400 bg-red-400/10 p-3 rounded-lg text-sm">
                       <AlertCircle className="w-4 h-4" />
-                      Something went wrong. Please try again.
+                      {t("contact.error")}
                     </div>
                   )}
                 </form>

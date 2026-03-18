@@ -35,4 +35,3 @@ export const setStatus = (status: StatusType) => {
   };
   return currentStatus;
 };
-

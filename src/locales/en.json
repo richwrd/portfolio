@@ -188,17 +188,6 @@
       "1": "SCALABILITY",
       "2": "RESILIENCE"
     },
-    "data": {
-      "title": "Data & HA",
-      "subtitle": "Critical Data Engineering",
-      "description": "PostgreSQL architectures focused on performance, continuity, and high availability.",
-      "details": {
-        "0": "PostgreSQL HA / Patroni / etcd / Pgpool-II / PgBouncer",
-        "1": "pg_partman and pgBackRest",
-        "2": "PL/pgSQL, data modeling, and SQL tuning",
-        "3": "ETL with Pentaho and Apache Hop"
-      }
-    },
     "backend": {
       "title": "BACKEND",
       "subtitle": "Systems Architecture",
@@ -220,7 +209,50 @@
         "2": "Infrastructure as code",
         "3": "Agile practices"
       }
+    },
+    "data": {
+      "title": "Data & HA",
+      "subtitle": "Critical Data Engineering",
+      "description": "PostgreSQL architectures focused on performance, continuity, and high availability.",
+      "details": {
+        "0": "PostgreSQL HA / Patroni / etcd / Pgpool-II / PgBouncer",
+        "1": "pg_partman and pgBackRest",
+        "2": "PL/pgSQL, data modeling, and SQL tuning",
+        "3": "ETL with Pentaho and Apache Hop"
+      }
     }
+  },
+  "contact": {
+    "headline1": "Let's build something",
+    "headline2": "amazing together.",
+    "description": "Ready to transform your digital presence?",
+    "badge1": "Available",
+    "badge2": "Response time: < 24 hours",
+    "form": {
+      "nameLabel": "Name",
+      "namePlaceholder": "Your name",
+      "nameRequired": "Name is required",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Your email",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email address",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Tell me about your project...",
+      "messageRequired": "Message is required",
+      "privacyAgree": "I agree to the",
+      "privacyPolicy": "Privacy Policy",
+      "privacyConsent": "and consent to the processing of my data.",
+      "privacyRequired": "You must agree to the privacy policy",
+      "captchaAlert": "Please complete the captcha",
+      "sending": "Sending...",
+      "sendMessage": "Send Message"
+    },
+    "success": {
+      "title": "Message Sent!",
+      "description": "I'll get back to you as soon as possible.",
+      "sendAnother": "Send another message"
+    },
+    "error": "Something went wrong. Please try again."
   },
   "footer": {
     "copyright": "Eduardo Richard. All rights reserved.",

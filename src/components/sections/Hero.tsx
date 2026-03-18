@@ -478,7 +478,6 @@ export default function Hero() {
             <GlassSurface
               width="auto"
               height="auto"
-              borderRadius={40}
               className="relative group hover:scale-105 transition-transform duration-200"
             >
               <div className="absolute inset-0 rounded-full gradient-animated opacity-20 group-hover:opacity-40 transition-opacity duration-300  pointer-events-none" />
@@ -496,7 +495,6 @@ export default function Hero() {
             <GlassSurface
               width="auto"
               height="auto"
-              borderRadius={40}
               className="relative group hover:scale-105 transition-transform duration-200"
             >
               <Button href="#process"

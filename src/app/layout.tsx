@@ -4,6 +4,7 @@ import IubendaScript from "@/components/scripts/IubendaScript";
 import PersonSchema from "@/components/scripts/PersonSchema";
 import ResourceHints from "@/components/scripts/ResourceHints";
 import SmoothScroll from "@/components/scripts/SmoothScroll";
+import { AssetLoadingProvider } from "@/context/AssetLoadingContext";
 import { BackgroundProvider } from "@/context/BackgroundContext";
 import { LanguageProvider } from "@/context/LanguageContext";
 import type { Metadata, Viewport } from "next";
@@ -118,15 +119,17 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground overflow-x-hidden w-full`}
       >
         {/* <LoadingScreen /> */}
-        <BackgroundProvider>
-          <LanguageProvider>
-            <IubendaScript />
-            <GoogleAnalytics />
-            <SmoothScroll>
-              {children}
-            </SmoothScroll>
-          </LanguageProvider>
-        </BackgroundProvider>
+        <AssetLoadingProvider>
+          <BackgroundProvider>
+            <LanguageProvider>
+              <IubendaScript />
+              <GoogleAnalytics />
+              <SmoothScroll>
+                {children}
+              </SmoothScroll>
+            </LanguageProvider>
+          </BackgroundProvider>
+        </AssetLoadingProvider>
       </body>
     </html>
   );

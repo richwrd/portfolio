@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
+import { useAssetLoading } from "@/context/AssetLoadingContext";
 
 const DEFAULT_EVENTS: Array<keyof WindowEventMap> = [
   "pointerdown",
@@ -14,15 +15,23 @@ const DEFAULT_EVENTS: Array<keyof WindowEventMap> = [
 interface RenderOnInteractionProps {
   children: ReactNode;
   events?: Array<keyof WindowEventMap>;
+  preload?: boolean;
 }
 
 export default function RenderOnInteraction({
   children,
   events = DEFAULT_EVENTS,
+  preload = false,
 }: RenderOnInteractionProps) {
   const [isEnabled, setIsEnabled] = useState(false);
+  const { isEverythingLoaded } = useAssetLoading();
 
   useEffect(() => {
+    if (preload) {
+        setIsEnabled(true);
+        return;
+    }
+    
     if (isEnabled) return;
 
     const activate = () => {
@@ -41,7 +50,7 @@ export default function RenderOnInteraction({
         window.removeEventListener(eventName, activate);
       });
     };
-  }, [events, isEnabled]);
+  }, [events, isEnabled, preload]);
 
   if (!isEnabled) return null;
 

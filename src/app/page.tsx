@@ -20,9 +20,9 @@ const SkillsShowcase = dynamic(() => import("@/components/sections/SkillsShowcas
   loading: () => null,
 });
 
-// const Contact = dynamic(() => import("@/components/sections/Contact"), {
-//   loading: () => null,
-// });
+const Contact = dynamic(() => import("@/components/sections/Contact"), {
+  loading: () => null,
+});
 
 const ReadyToStart = dynamic(() => import("@/components/sections/ReadyToStart"), {
   loading: () => null,
@@ -54,18 +54,18 @@ export default async function Home() {
         <SplashCursor />
       </RenderOnInteraction>
 
-      <RenderOnInteraction>
+      <RenderOnInteraction preload={true}>
         <MusicPlayer />
       </RenderOnInteraction>
 
-      <main className="text-foreground selection:bg-primary/30 relative overflow-visible">
+      <main id="home" className="text-foreground selection:bg-primary/30 relative overflow-visible">
         <Hero />
 
-        <RenderOnView anchorId="about" minHeightClassName="min-h-[90vh]">
+        <RenderOnView anchorId="about" minHeightClassName="min-h-[90vh]" preload={true}>
           <About />
         </RenderOnView>
 
-        <RenderOnView minHeightClassName="min-h-[100vh]">
+        <RenderOnView minHeightClassName="min-h-[100vh]" preload={true}>
           <ReadyToStart />
         </RenderOnView>
 
@@ -73,17 +73,21 @@ export default async function Home() {
           anchorId="skills"
           minHeightClassName="min-h-[800vh]"
           rootMargin="500px 0px"
+          preload={true}
         >
           <SkillsShowcase />
         </RenderOnView>
 
-
-        {/* <Process /> */}
-        {/* 
+        {/*
+        <Process />
         <DevToPosts posts={posts} />
-        <Contact /> */}
+        */}
 
-        <RenderOnView minHeightClassName="min-h-[280px]">
+        <RenderOnView minHeightClassName="min-h-[100vh]" preload={true}>
+          <Contact />
+        </RenderOnView>
+
+        <RenderOnView minHeightClassName="min-h-[280px]" preload={true}>
           <Footer />
         </RenderOnView>
 

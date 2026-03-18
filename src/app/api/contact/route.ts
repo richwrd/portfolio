@@ -1,127 +1,122 @@
 import axios from 'axios';
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { SendMailClient } from "zeptomail";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { name, email, message, token } = body;
 
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    const isLocalhostToken = token === 'localhost-token';
+
+    if (isDevelopment) {
+      console.log('Contact API Request:', {
+        name,
+        email,
+        isLocalhostToken,
+        tokenReceived: token ? '(present)' : '(missing)',
+        isDev: isDevelopment,
+      });
+    }
+
     if (!token) {
       return NextResponse.json({ error: 'Captcha token missing' }, { status: 400 });
     }
 
-    // Verify Turnstile Token
-    const verifyUrl = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
-    const result = await axios.post(verifyUrl, {
-      secret: process.env.TURNSTILE_SECRET_KEY,
-      response: token,
-    });
+    // Skip verification in development if the token is the placeholder 'localhost-token'
+    if (!(isDevelopment && isLocalhostToken)) {
+      // Verify Turnstile Token
+      const verifyUrl = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+      try {
+        const result = await axios.post(verifyUrl, {
+          secret: process.env.TURNSTILE_SECRET_KEY,
+          response: token,
+        });
 
-    if (!result.data.success) {
-      return NextResponse.json({ error: 'Captcha validation failed' }, { status: 400 });
+        if (!result.data.success) {
+          console.error('Turnstile verification failed:', result.data);
+          return NextResponse.json({ error: 'Captcha validation failed' }, { status: 400 });
+        }
+      } catch (err: unknown) {
+        console.error('Turnstile verification error:', err);
+        if (!isDevelopment) {
+          return NextResponse.json({ error: 'Captcha service error' }, { status: 400 });
+        }
+      }
     }
 
-    // Send Email via SMTP (Brevo/Gmail/etc.)
-    if (process.env.SMTP_HOST && process.env.SMTP_USER) {
-      if (!process.env.SMTP_PASS) {
-        console.error('SMTP_PASS is missing in environment variables');
-        return NextResponse.json(
-          { error: 'Email service not properly configured' },
-          { status: 500 }
-        );
-      }
+    // Send Email via ZeptoMail
+    const zeptoUrl = process.env.ZEPTOMAIL_URL;
+    const zeptoToken = process.env.ZEPTOMAIL_TOKEN;
+    const fromAddress = process.env.ZEPTOMAIL_FROM_ADDRESS || 'noreply@eduardorichard.com';
+    const fromName = process.env.ZEPTOMAIL_FROM_NAME || 'Portfolio';
+    const toAddress = process.env.ZEPTOMAIL_TO_ADDRESS || 'founder@eduardorichard.com';
+    const toName = process.env.ZEPTOMAIL_TO_NAME || 'Eduardo Richard';
 
-      // Brevo-specific configuration
-      const isBrevo = process.env.SMTP_HOST.includes('brevo.com') ||
-        process.env.SMTP_HOST.includes('sendinblue.com');
-
-      const smtpPort = Number(process.env.SMTP_PORT) || 587;
-      const isSecurePort = smtpPort === 465;
-
-      const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: smtpPort,
-        secure: isSecurePort, // true for 465, false for other ports
-        auth: {
-          user: process.env.SMTP_USER.trim(), // Remove any whitespace
-          pass: process.env.SMTP_PASS.trim(), // Remove any whitespace
-        },
-        // Brevo-specific TLS configuration
-        ...(isBrevo && {
-          tls: {
-            ciphers: 'SSLv3',
-            rejectUnauthorized: false,
-          },
-          requireTLS: !isSecurePort, // Require TLS for port 587
-        }),
-        // General TLS options for other providers
-        ...(!isBrevo && {
-          tls: {
-            rejectUnauthorized: false,
-          },
-        }),
+    if (zeptoUrl && zeptoToken) {
+      const client = new SendMailClient({
+        url: zeptoUrl,
+        token: zeptoToken
       });
 
-      // Log configuration (without sensitive data)
-      if (process.env.NODE_ENV === 'development') {
-        console.log('SMTP Configuration:', {
-          host: process.env.SMTP_HOST,
-          port: smtpPort,
-          secure: isSecurePort,
-          user: process.env.SMTP_USER,
-          passLength: process.env.SMTP_PASS?.length,
-          isBrevo,
-        });
-      }
-
-      // Verify connection configuration
       try {
-        await transporter.verify();
-        if (process.env.NODE_ENV === 'development') {
-          console.log('SMTP connection verified successfully');
-        }
-      } catch (verifyError: unknown) {
-        const error = verifyError as { code?: string; message?: string; response?: string; responseCode?: number };
-        console.error('SMTP connection verification failed:', {
-          code: error.code,
-          message: error.message,
-          response: error.response,
-          responseCode: error.responseCode,
+        await client.sendMail({
+          "from": {
+            "address": fromAddress,
+            "name": fromName
+          },
+          "to": [
+            {
+              "email_address": {
+                "address": toAddress,
+                "name": toName
+              }
+            }
+          ],
+          "subject": `Portfolio Contact: ${name}`,
+          "htmlbody": `
+            <h3>New Contact Message</h3>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+            <p><strong>Message:</strong></p>
+            <p>${message.replace(/\n/g, '<br>')}</p>
+          `,
         });
 
-        // More specific error message for Brevo
-        if (isBrevo && error.code === 'EAUTH') {
-          return NextResponse.json(
-            {
-              error: 'Brevo SMTP authentication failed.',
-              details: 'Please verify: 1) SMTP_USER is your full email address, 2) SMTP_PASS is your SMTP key (not API key), 3) Credentials are from Brevo SMTP settings page'
-            },
-            { status: 500 }
-          );
+        if (isDevelopment) {
+          console.log('Email sent successfully via ZeptoMail');
+        }
+      } catch (mailError: any) {
+        // Detailed logging for debugging
+        console.error('ZeptoMail Error:', JSON.stringify(mailError, null, 2));
+        
+        const shouldSimulate = process.env.ZEPTOMAIL_SIMULATE_SUCCESS === 'true';
+
+        // Simulation toggle for UI testing
+        if (shouldSimulate) {
+          console.warn('⚠️ SIMULATION MODE: ZeptoMail failed but returning success to frontend.');
+          return NextResponse.json({ 
+            success: true, 
+            message: 'Simulated success (Simulation Active)',
+            devError: mailError.message || mailError.error?.message 
+          });
         }
 
         return NextResponse.json(
-          { error: 'Email service authentication failed. Please check your SMTP credentials.' },
+          { 
+            error: 'Failed to send email via ZeptoMail',
+            details: isDevelopment ? (mailError.message || mailError.error?.message) : undefined 
+          },
           { status: 500 }
         );
       }
-
-      await transporter.sendMail({
-        from: process.env.SMTP_FROM || `Portfolio Contact <${process.env.SMTP_USER}>`,
-        to: process.env.CONTACT_EMAIL || process.env.SMTP_USER,
-        replyTo: email,
-        subject: `New Contact from ${name}`,
-        text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
-        html: `
-          <h3>New Contact Message</h3>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-          <p><strong>Message:</strong></p>
-          <p>${message.replace(/\n/g, '<br>')}</p>
-        `,
-      });
     } else {
+      const shouldSimulate = process.env.ZEPTOMAIL_SIMULATE_SUCCESS === 'true';
+      if (shouldSimulate) {
+        console.log('Skipping real send (missing credentials). Returning simulated success.');
+        return NextResponse.json({ success: true, message: 'Simulated success (no credentials)' });
+      }
       console.log('Email sending skipped (no credentials). Data:', { name, email, message });
     }
 
@@ -130,34 +125,12 @@ export async function POST(request: Request) {
     console.error('Contact error:', error);
     const err = error as { code?: string; message?: string };
 
-    // Provide more specific error messages
-    if (err.code === 'EAUTH') {
-      return NextResponse.json(
-        {
-          error: 'Email authentication failed. Please check your SMTP credentials in environment variables.',
-          details: 'Invalid SMTP username or password'
-        },
-        { status: 500 }
-      );
-    }
-
-    if (err.code === 'ECONNECTION' || err.code === 'ETIMEDOUT') {
-      return NextResponse.json(
-        {
-          error: 'Could not connect to email server. Please check your SMTP host and port settings.',
-          details: err.message
-        },
-        { status: 500 }
-      );
-    }
-
     return NextResponse.json(
       {
-        error: 'Failed to send email. Please try again later.',
+        error: 'Failed to process request. Please try again later.',
         details: process.env.NODE_ENV === 'development' ? err.message : undefined
       },
       { status: 500 }
     );
   }
 }
-

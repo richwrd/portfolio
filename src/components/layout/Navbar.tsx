@@ -357,6 +357,7 @@ export default function Navbar() {
                 <GlassSurface
                   width="auto"
                   height="auto"
+                  borderRadius={20}
                   className="hidden md:flex hover:scale-105 transition-transform duration-200"
                 >
                   <button
@@ -386,6 +387,7 @@ export default function Navbar() {
                 <GlassSurface
                   width="auto"
                   height="auto"
+                  borderRadius={20}
                   className="relative group hover:scale-105 transition-transform duration-200"
                 >
                   <div className="absolute inset-0 rounded-full gradient-animated opacity-25 group-hover:opacity-50 transition-opacity duration-300 blur-[1px] pointer-events-none" />
@@ -406,6 +408,7 @@ export default function Navbar() {
               <GlassSurface
                 width="auto"
                 height="auto"
+                borderRadius={20}
                 className="hover:scale-105 transition-transform duration-200"
               >
                 <button
@@ -418,7 +421,6 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Mobile Status Badge and Menu Toggle */}
           <div className="md:hidden flex items-center gap-3">
             {/* Status Badge - Mobile */}
             {!loading && (
@@ -455,6 +457,7 @@ export default function Navbar() {
             <GlassSurface
               width={48}
               height={48}
+              borderRadius={20}
               distortionScale={-200}
               brightness={20}
               className="hover:scale-105 transition-transform duration-300 relative z-50"

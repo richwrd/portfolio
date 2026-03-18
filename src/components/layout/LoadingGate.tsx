@@ -13,8 +13,16 @@ export default function LoadingGate({ children }: LoadingGateProps) {
 
   return (
     <>
+      <div 
+        style={{ 
+          opacity: isReady ? 1 : 0, 
+          visibility: isReady ? "visible" : "hidden",
+          transition: "opacity 0.5s ease"
+        }}
+      >
+        {children}
+      </div>
       {!isReady && <LoadingScreen onComplete={() => setIsReady(true)} />}
-      {isReady ? children : null}
     </>
   );
 }

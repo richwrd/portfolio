@@ -131,7 +131,7 @@
     },
     "story": {
       "paragraph1": "Sem disponibilidade, o sistema não existe. Sem performance, ninguém usa. Sem confiabilidade, o crescimento para. Entrego sistemas preparados para crescer com resiliência e controle.",
-      "paragraph2": "Especializado em PostgreSQL e infraestrutura cloud-native, conecto banco de dados, aplicação e ambiente de forma eficiente — de clusters de alta disponibilidade com Patroni até automações em Python e construção de APIs com NestJS.",
+      "paragraph2": "Especializado em PostgreSQL e infraestrutura cloud-native, conecto banco de dados, aplicação e ambiente de forma eficiente. Desde clusters de alta disponibilidade com Patroni até automações em Shell Script, Python e construção de APIs com NestJS.",
       "paragraph3": "Negócio escala através de pessoas. Já mentorei mais de 10 profissionais, porque disseminar conhecimento técnico dentro do time é um multiplicador tão estratégico quanto qualquer entrega de software."
     },
     "experiences": {
@@ -188,17 +188,6 @@
       "1": "ESCALABILIDADE",
       "2": "RESILIÊNCIA"
     },
-    "data": {
-      "title": "Dados & HA",
-      "subtitle": "Engenharia de Dados Críticos",
-      "description": "Arquiteturas PostgreSQL com foco em performance, continuidade e alta disponibilidade.",
-      "details": {
-        "0": "PostgreSQL HA / Patroni / etcd / Pgpool-II / PgBouncer",
-        "1": "pgBackRest e pg_partman",
-        "2": "PL/pgSQL, modelagem e tuning SQL",
-        "3": "ETL com Pentaho e Apache Hop"
-      }
-    },
     "backend": {
       "title": "BACKEND",
       "subtitle": "Arquitetura de Sistemas",
@@ -220,7 +209,61 @@
         "2": "Infraestrutura como código",
         "3": "Práticas ágeis"
       }
+    },
+    "data": {
+      "title": "Dados & HA",
+      "subtitle": "Engenharia de Dados Críticos",
+      "description": "Arquiteturas PostgreSQL com foco em performance, continuidade e alta disponibilidade.",
+      "details": {
+        "0": "PostgreSQL HA / Patroni / etcd / Pgpool-II / PgBouncer",
+        "1": "pgBackRest e pg_partman",
+        "2": "PL/pgSQL, modelagem e tuning SQL",
+        "3": "ETL com Pentaho e Apache Hop"
+      }
     }
+  },
+  "projects": {
+    "title": "Projetos",
+    "subtitle": "Projetos",
+    "description": "Projetos",
+    "details": {
+      "0": "PostgreSQL HA / Patroni / etcd / Pgpool-II / PgBouncer",
+      "1": "pgBackRest e pg_partman",
+      "2": "PL/pgSQL, modelagem e tuning SQL",
+      "3": "ETL com Pentaho e Apache Hop"
+    }
+  },
+  "contact": {
+    "headline1": "Vamos construir algo",
+    "headline2": "incrível juntos.",
+    "description": "Pronto para transformar sua presença digital?",
+    "badge1": "Disponível",
+    "badge2": "Tempo de resposta: < 24 horas",
+    "form": {
+      "nameLabel": "Nome",
+      "namePlaceholder": "Seu nome",
+      "nameRequired": "Nome é obrigatório",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "Seu email",
+      "emailRequired": "E-mail é obrigatório",
+      "emailInvalid": "Endereço de e-mail inválido",
+      "messageLabel": "Mensagem",
+      "messagePlaceholder": "Conte-me sobre o seu projeto...",
+      "messageRequired": "Mensagem é obrigatória",
+      "privacyAgree": "Eu concordo com a",
+      "privacyPolicy": "Política de Privacidade",
+      "privacyConsent": "e consinto com o processamento dos meus dados.",
+      "privacyRequired": "Você deve concordar com a política de privacidade",
+      "captchaAlert": "Por favor, complete o captcha",
+      "sending": "Enviando...",
+      "sendMessage": "Enviar Mensagem"
+    },
+    "success": {
+      "title": "Mensagem Enviada!",
+      "description": "Retornarei assim que possível.",
+      "sendAnother": "Enviar outra mensagem"
+    },
+    "error": "Algo deu errado. Por favor, tente novamente."
   },
   "footer": {
     "copyright": "Eduardo Richard. Todos os direitos reservados.",
